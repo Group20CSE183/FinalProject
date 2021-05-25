@@ -35,7 +35,7 @@ git commit -m [commit message]
 git push 
 ```
 
-When you want to update your branch to the current main branch 
+When you want to update your branch to the current main branch, in other words, merge the main branch into your branch. 
 
 ```
 git checkout main 
