@@ -30,30 +30,51 @@ from yatl.helpers import A
 from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
 from py4web.utils.url_signer import URLSigner
 from .models import get_user_email
+
 url_signer = URLSigner(session)
 
 @action('index')
-@action.uses(db, auth, 'index.html')
+@action.uses(db, auth.user, url_signer, 'index.html')
 def index():
-    import json
-    from .settings import APP_FOLDER
-    import os
-    JSON_FILE = os.path.join(APP_FOLDER, "data", "table.json")
-
-    with open(JSON_FILE, "r") as f:
-        data = json.load(f)
-
-    headers = ['bird', 'weight', 'diet', 'habitat']
-
     return dict(
-        headers=headers,
-        rows=data
+        # COMPLETE: return here any signed URLs you need.
+        my_callback_url = URL('my_callback', signer=url_signer),
+        load_posts_url = URL('load_posts', signer=url_signer),
+        add_post_url = URL('add_post', signer=url_signer),
+        delete_post_url = URL('delete_post', signer=url_signer),
+        user_email = get_user_email(),
+        username = auth.current_user.get('first_name') + " " + auth.current_user.get("last_name"),
     )
 
-@action('profileSettings')
-@action.uses(db, auth, 'profileSettings.html')
-def profileSettings():
-    x = "In profileSettings"
-    print(x)
-    return dict()
+@action('load_posts')
+@action.uses(url_signer.verify(), db)
+def load_posts():
+    rows = db(db.post).select().as_list()
+    for row in rows:
+        email = rows['user_email']
+        r = db(db.auth_user.email == email).select().first()
+        name = r.first_name + " " + r.last_name if r is not None else "Unknown"
+        post['name'] = name
+        thumbs = db((db.thumb.post_id == post.get('id')) & (db.thumb.user_email == email)).select().as_list()
+        if len(thumbs) > 0:
+            thumb = thumbs[0]
+            post['rating'] = thumb
+        else:
+            post['rating'] = {'rating':-1}
+    return dict(rows=rows)
 
+@action('add_post', method="POST")
+@action.uses(url_signer.verify(), db)
+def add_post():
+    id = db.post.insert(
+        text=request.json.get('text')
+    )
+    return dict(id=id)
+
+@action('delete_post')
+@action.uses(url_signer.verify(), db)
+def delete_post():
+    id = request.params.get('id')
+    assert id is not None
+    db(db.post.id == id).delete()
+    return "ok"
