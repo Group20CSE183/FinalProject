@@ -20,11 +20,6 @@ git status
 
 here, it should say you are on the main branch and that everything is up to date. 
 
-
-To create a new branch in your name, go into the repo and 
-
-```
-git checkout -b [name]
 ```
 
 When you make changes and want to send to your branch 
