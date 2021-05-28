@@ -22,7 +22,7 @@ here, it should say you are on the main branch and that everything is up to date
 
 ```
 
-When you make changes and want to send to your branch 
+When you make changes and want to send to the project
 
 ```
 git add *
@@ -30,14 +30,11 @@ git commit -m [commit message]
 git push 
 ```
 
-When you want to update your branch to the current main branch, in other words, merge the main branch into your branch. 
+When you want to update your project to what is in the server
+
+#### please note: you want to update your local repo every single time before making changes to it 
 
 ```
-git checkout main 
-git pull 
-git checkout [your branch name]
-git merge main 
+git pull
 ```
-
-If you want to push your changes to the main branch, I still have to see how to do this. Will include when this is done. 
 
