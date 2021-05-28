@@ -20,8 +20,6 @@ git status
 
 here, it should say you are on the main branch and that everything is up to date. 
 
-```
-
 When you make changes and want to send to the project
 
 ```
