@@ -16,7 +16,7 @@ cd [name of folder]
 
 When you want to update your project to what is in the server
 
-## please note: you want to update your local repo every single time before making changes to it 
+#### please note: you want to update your local repo every single time before making changes to it 
 
 ```
 git pull
