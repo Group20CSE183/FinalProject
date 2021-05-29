@@ -50,23 +50,29 @@ def index():
 @action.uses(url_signer.verify(), db)
 def load_posts():
     rows = db(db.post).select().as_list()
-    for row in rows:
-        email = rows['user_email']
-        r = db(db.auth_user.email == email).select().first()
-        # name = r.first_name + " " + r.last_name if r is not None else "Unknown"
-        # post['name'] = name
+    # for row in rows:
+    #     email = rows['user_email']
+    #     r = db(db.auth_user.email == email).select().first()
+    #     # name = r.first_name + " " + r.last_name if r is not None else "Unknown"
+    #     # post['name'] = name
+    rows.reverse()
     return dict(rows=rows)
 
 @action('add_post', method="POST")
 @action.uses(url_signer.verify(), db)
 def add_post():
+    user_id = get_user_email()
+    r = db(db.auth_user.email == user_id).select().first()
+    name = r.first_name + " " + r.last_name if r is not None else "Unknown"
     id = db.post.insert(
         text=request.json.get('text'),
+        name=name,
         date=request.json.get('date'),
         time=request.json.get('time'),
         location=request.json.get('location')
     )
-    return dict(id=id)
+    return dict(id=id,
+    name=name,)
 
 @action('delete_post')
 @action.uses(url_signer.verify(), db)

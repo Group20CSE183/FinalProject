@@ -113,3 +113,11 @@ success!
 success!
 success!
 success!
+success!
+timestamp: 2021-05-28T22:33:20.996469
+ALTER TABLE "post" ADD "name" CHAR(512);
+success!
+success!
+success!
+success!
+success!

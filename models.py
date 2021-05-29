@@ -26,6 +26,7 @@ db.define_table('post',
                 Field('date', requires=IS_NOT_EMPTY()),
                 Field('time', requires=IS_NOT_EMPTY()),
                 Field('location', requires=IS_NOT_EMPTY()),
+                Field('name'),
             )
 
 db.commit()

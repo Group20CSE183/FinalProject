@@ -40,6 +40,7 @@ let init = (app) => {
 
                 id: response.data.id,
                 text: app.vue.add_text,
+                name: response.data.name,
                 date: app.vue.add_date,
                 time: app.vue.add_time,
                 location: app.vue.add_location
@@ -129,9 +130,13 @@ let init = (app) => {
         // Put here any initialization code.
         // Typically this is a server GET call to load the data.
         axios.get(load_posts_url).then(function (response) {
-            var post_list = result.data.posts
+            rows = response.data.rows;
+            var post_list = response.data.posts
             var reverseList = post_list.reverse()
             app.vue.posts = app.reindex(reverseList);
+            app.enumerate(rows);
+            app.complete(rows);
+            app.vue.rows=rows;
         });
     };
 
