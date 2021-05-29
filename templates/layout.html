@@ -14,7 +14,7 @@
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="[[=URL('index')]]">
-          <h1>Activity Finder</h1>
+          Learn py4web
           <!-- <img class="logo" width="150" src="images/site_icon.png"> -->
         </a>
 
@@ -28,24 +28,11 @@
       </div>
 
       <div id="the-navbar-menu" class="navbar-menu">
-        <div class="navbar-end">
-          [[block page_menu_items]]
-          [[end]]
+        <div class="navbar-start">
+          [[block page_menu_items]]<!-- individual pages can add menu items here -->[[end]]
         </div>
-        <div class="navbar-end">
-          <a class="navbar-item" href="[[=URL('index')]]">
-            Home
-          </a>
-          <a class="navbar-item">
-            All Activities 
-          </a>
-          <a class="navbar-item">
-            Create a Post
-          </a>
-          <a class="navbar-item">
-            Settings
-          </a>
 
+        <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
               [[if globals().get('user'):]]
@@ -61,19 +48,24 @@
                   </div>
                 </div>
               [[else:]]
-                <a class="button is-light" href="[[=URL('auth/register')]]">Sign up</a>
-                <a class="button is-light" href="[[=URL('auth/login')]]">Log in</a>
+                <a class="button is-link" href="[[=URL('auth/register')]]">Sign up</a>
+                <a class="button is-success" href="[[=URL('auth/login')]]">Log in</a>
               [[pass]]
             </div>
           </div>
         </div>
       </div>
     </nav>
-    
 
     <!-- beginning of HTML inserted by extending template -->
     [[include]]
     <!-- end of HTML inserted by extending template -->
+    <footer class="footer">
+      <div class="content has-text-centered">
+        Made with <a href="https://py4web.com">py4web</a>.
+        <a href="https://learn-py4web.github.io">Learn py4web!</a>
+      </div>
+    </footer>
   </body>
   <script src="js/sugar.min.js"></script>
   <script src="js/axios.min.js"></script>

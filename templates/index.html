@@ -88,68 +88,7 @@
       </div>
     </div>
   </div>
-  <!--Activities Posted Header -->
-
-  <!--TEMP POSTS (CARD ELEMENT
-  <div class="section-fo">
-    <div class="section">
-      <div class="columns">
-        <div class="column">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-3by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="content">
-                Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida
-                at
-                eget metus.
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-3by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="content">
-                Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida
-                at
-                eget metus.
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-3by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="content">
-                Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida
-                at
-                eget metus.
-              </div>
-            </div>
-          </div>
-          <br>
-        </div>
-      </div>
-    </div>
-  </div>
-  TEMP POSTS (CARD ELEMENT)-->
-
-
-
+  
   <div class="section" id="vue-target" v-cloak>
     <!-- Put here your Vue.js template -->
     <div v-if="add_mode" class="container block">
@@ -159,7 +98,10 @@
         <div class="field">
           <label class="label">Post:</label>
           <div class="control">
-            <input type="text" v-model="add_text" class="input">
+            <p>Date:</p><input type="date" v-model="add_date" class="input">
+            <p>Time:</p> <input type="time" v-model="add_time" class="input">
+            <p>Location:</p><input type="location" v-model="add_location" class="input">
+            <p>Event Information:</p><input type="text" v-model="add_text" class="input">
           </div>
         </div>
         <div class="field">
@@ -176,7 +118,10 @@
       <table class="table is-striped is-fullwidth">
         <div v-for="r in rows">
           <div class="box">
-            <p>{{r.text}}</p>
+            <p><b>Date:</b> {{r.date}}</p>
+            <p><b>Time:</b> {{r.time}}</p>
+            <p><b>Location:</b> {{r.location}}</p>
+            <p><b>Event Information:</b> {{r.text}}</p>
             <!-- code for thumbs -->
             <span>
               <i class="fa fa-thumbs-o-up"></i>
@@ -194,8 +139,7 @@
           </div>
         </div>
         <button @click="set_add_status(true)" class="button is-dark align: right">
-          Post An Activity
-          <i class="fa fa-plus fa-fw"></i>
+          <i class="fa fa-plus fa-fw"></i> Post An Activity
         </button>
     </div>
   </div>

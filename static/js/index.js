@@ -12,8 +12,10 @@ let init = (app) => {
         // Complete as you see fit.
         add_mode: false,
         add_text: "",
+        add_date: "",
+        add_time: "",
+        add_location: "",
         rows: [],
-        thumbs: [],
         user_email: user_email,
         userName : username,
     };
@@ -28,13 +30,19 @@ let init = (app) => {
     app.add_post = function () {
         axios.post(add_post_url,
             {
-                text: app.vue.add_text
+                text: app.vue.add_text,
+                date: app.vue.add_date,
+                time: app.vue.add_time,
+                location: app.vue.add_location
             }
             ).then(function (response) {
             app.vue.rows.push({
 
                 id: response.data.id,
-                text: app.vue.add_text
+                text: app.vue.add_text,
+                date: app.vue.add_date,
+                time: app.vue.add_time,
+                location: app.vue.add_location
             });
             app.enumerate(app.vue.rows);
             app.reset_form();
@@ -44,6 +52,9 @@ let init = (app) => {
 
     app.reset_form = function () {
         app.vue.add_text = "";
+        app.vue.add_date = "";
+        app.vue.add_time = "";
+        app.vue.add_location = "";
     };
 
     app.delete_post = function (row_idx) {
@@ -61,10 +72,16 @@ let init = (app) => {
 
     app.complete = () => {
         let text = app.data.text
+        let date = app.data.date
+        let time = app.data.time
+        let location = app.data.location
         app.data.showNewPost = false
 
         data = {
-            text : text
+            text : text,
+            date : date,
+            time : time,
+            location : location
         }
 
     axios.post(add_post_url, data).then(
@@ -74,6 +91,9 @@ let init = (app) => {
             new_post = {
                 name : app.data.userName,
                 text : app.data.text,
+                date: app.data.date,
+                time : app.data.time,
+                location : app.data.location,
                 user_email : app.data.user_email,
                 id : id,
                 rating : {
@@ -95,8 +115,6 @@ let init = (app) => {
         add_post: app.add_post,
         set_add_status: app.set_add_status,
         delete_post: app.delete_post,
-        // complete = app.complete,
-        // add_like = app.add_like,
     };
 
     // This creates the Vue instance.
@@ -111,7 +129,6 @@ let init = (app) => {
         // Put here any initialization code.
         // Typically this is a server GET call to load the data.
         axios.get(load_posts_url).then(function (response) {
-            // app.vue.rows = app.enumerate(response.data.rows);
             var post_list = result.data.posts
             var reverseList = post_list.reverse()
             app.vue.posts = app.reindex(reverseList);

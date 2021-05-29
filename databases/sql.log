@@ -92,3 +92,24 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-05-28T16:55:46.907495
+ALTER TABLE "post" ADD "location" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!

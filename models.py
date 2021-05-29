@@ -23,13 +23,9 @@ def get_time():
 db.define_table('post',
                 Field('user_email', default=get_user_email),
                 Field('text', requires=IS_NOT_EMPTY()),
-                Field('time', 'datetime', default=get_time)
-            )
-
-db.define_table('thumb',
-                Field('user', 'reference auth_user', default=get_user_email),
-                Field('post_id', 'reference post'),
-                Field('rating', 'integer', default=0),
+                Field('date', requires=IS_NOT_EMPTY()),
+                Field('time', requires=IS_NOT_EMPTY()),
+                Field('location', requires=IS_NOT_EMPTY()),
             )
 
 db.commit()

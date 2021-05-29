@@ -53,21 +53,18 @@ def load_posts():
     for row in rows:
         email = rows['user_email']
         r = db(db.auth_user.email == email).select().first()
-        name = r.first_name + " " + r.last_name if r is not None else "Unknown"
-        post['name'] = name
-        thumbs = db((db.thumb.post_id == post.get('id')) & (db.thumb.user_email == email)).select().as_list()
-        if len(thumbs) > 0:
-            thumb = thumbs[0]
-            post['rating'] = thumb
-        else:
-            post['rating'] = {'rating':-1}
+        # name = r.first_name + " " + r.last_name if r is not None else "Unknown"
+        # post['name'] = name
     return dict(rows=rows)
 
 @action('add_post', method="POST")
 @action.uses(url_signer.verify(), db)
 def add_post():
     id = db.post.insert(
-        text=request.json.get('text')
+        text=request.json.get('text'),
+        date=request.json.get('date'),
+        time=request.json.get('time'),
+        location=request.json.get('location')
     )
     return dict(id=id)
 
