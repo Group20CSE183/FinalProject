@@ -36,7 +36,7 @@ let init = (app) => {
                 location: app.vue.add_location
             }
             ).then(function (response) {
-            app.vue.rows.push({
+            app.vue.rows.unshift({
 
                 id: response.data.id,
                 text: app.vue.add_text,
@@ -131,11 +131,11 @@ let init = (app) => {
         // Typically this is a server GET call to load the data.
         axios.get(load_posts_url).then(function (response) {
             rows = response.data.rows;
-            var post_list = response.data.posts
-            var reverseList = post_list.reverse()
-            app.vue.posts = app.reindex(reverseList);
+            // var post_list = response.data.posts
+            // var reverseList = post_list.reverse()
+            // app.vue.posts = app.reindex(reverseList);
             app.enumerate(rows);
-            app.complete(rows);
+            //app.complete(rows);
             app.vue.rows=rows;
         });
     };

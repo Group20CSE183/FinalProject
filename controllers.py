@@ -50,11 +50,6 @@ def index():
 @action.uses(url_signer.verify(), db)
 def load_posts():
     rows = db(db.post).select().as_list()
-    # for row in rows:
-    #     email = rows['user_email']
-    #     r = db(db.auth_user.email == email).select().first()
-    #     # name = r.first_name + " " + r.last_name if r is not None else "Unknown"
-    #     # post['name'] = name
     rows.reverse()
     return dict(rows=rows)
 
@@ -69,7 +64,7 @@ def add_post():
         name=name,
         date=request.json.get('date'),
         time=request.json.get('time'),
-        location=request.json.get('location')
+        location=request.json.get('location'),
     )
     return dict(id=id,
     name=name,)
