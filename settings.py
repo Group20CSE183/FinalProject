@@ -66,10 +66,6 @@ OAUTH2GOOGLE_CLIENT_SECRET = None
 OAUTH2OKTA_CLIENT_ID = None
 OAUTH2OKTA_CLIENT_SECRET = None
 
-# single sign on Google (will be used if provided)
-OAUTH2FACEBOOK_CLIENT_ID = None
-OAUTH2FACEBOOK_CLIENT_SECRET = None
-
 # enable PAM
 USE_PAM = False
 
@@ -90,6 +86,6 @@ CELERY_BROKER = "redis://localhost:6379/0"
 
 # try import private settings
 try:
-    from .settings_private import *
+    from .private.secret_settings import *
 except (ImportError, ModuleNotFoundError):
     pass
