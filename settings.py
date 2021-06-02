@@ -7,6 +7,14 @@ This file is provided as an example:
 """
 import os
 from py4web.core import required_folder
+#
+from py4web.core import required_folder
+from .private.secret_settings import *
+
+# from py4web.utils.auth import Auth
+# auth = Auth(session, db)
+# # (configure here)
+# auth.enable()
 
 # db settings
 APP_FOLDER = os.path.dirname(__file__)
@@ -55,6 +63,7 @@ REDIS_SERVER = "localhost:6379"
 LOGGERS = [
     "warning:stdout"
 ]  # syntax "severity:filename" filename can be stderr or stdout
+
 
 # single sign on Google (will be used if provided)
 OAUTH2GOOGLE_CLIENT_ID = None
