@@ -19,7 +19,7 @@ cd [name of folder]
 git checkout -b nameofbranch
 ```
 
-When you want to update your branch to what is in the main branch
+### When you want to update your branch to what is in the main branch
 
 ```
 git checkout main 
