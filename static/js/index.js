@@ -16,6 +16,9 @@ let init = (app) => {
         add_date: "",
         add_time: "",
         add_location: "",
+        add_tag1: "",
+        add_tag2: "",
+        add_tag3: "",
         rows: [],
         user_email: user_email,
         userName : username,
@@ -35,6 +38,9 @@ let init = (app) => {
                 date: app.vue.add_date,
                 time: app.vue.add_time,
                 location: app.vue.add_location,
+                tag1: app.vue.add_tag1,
+                tag2: app.vue.add_tag2,
+                tag3: app.vue.add_tag3,
                 going: 1,
             }
             ).then(function (response) {
@@ -47,6 +53,9 @@ let init = (app) => {
                 date: app.vue.add_date,
                 time: app.vue.add_time,
                 location: app.vue.add_location,
+                tag1: app.vue.add_tag1,
+                tag2: app.vue.add_tag2,
+                tag3: app.vue.add_tag3,
                 going: 0,
                 is_going: false,
                 cur_idx: -1
@@ -76,6 +85,9 @@ let init = (app) => {
         app.vue.add_date = "";
         app.vue.add_time = "";
         app.vue.add_location = "";
+        app.vue.add_tag1 = "";
+        app.vue.add_tag2 = "";
+        app.vue.add_tag3 = "";
     };
 
     app.delete_post = function (row_idx) {
@@ -96,13 +108,19 @@ let init = (app) => {
         let date = app.data.date
         let time = app.data.time
         let location = app.data.location
+        let tag1 = app.data.tag1
+        let tag2 = app.data.tag2 
+        let tag3 = app.data.tag3
         app.data.showNewPost = false
 
         data = {
             text : text,
             date : date,
             time : time,
-            location : location
+            location : location,
+            tag1 : tag1,
+            tag2 : tag2,
+            tag3 : tag3
         }
 
     axios.post(add_post_url, data).then(
@@ -115,6 +133,9 @@ let init = (app) => {
                 date: app.data.date,
                 time : app.data.time,
                 location : app.data.location,
+                tag1 : app.data.tag1,
+                tag2 : app.data.tag2,
+                tag3 : app.data.tag3,
                 user_email : app.data.user_email,
                 id : id,
                 rating : {

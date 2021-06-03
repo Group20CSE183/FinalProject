@@ -172,3 +172,19 @@ CREATE TABLE "going"(
     "people_going" CHAR(512)
 );
 success!
+success!
+timestamp: 2021-06-02T22:56:42.183097
+ALTER TABLE "posts" ADD "tag" CHAR(512);
+success!
+success!
+success!
+timestamp: 2021-06-02T23:18:50.314901
+ALTER TABLE "posts" ADD "tag1" CHAR(512);
+timestamp: 2021-06-02T23:18:50.316123
+ALTER TABLE "posts" ADD "tag2" CHAR(512);
+timestamp: 2021-06-02T23:18:50.316572
+ALTER TABLE "posts" ADD "tag3" CHAR(512);
+success!
+success!
+success!
+success!

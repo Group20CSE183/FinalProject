@@ -78,7 +78,7 @@
       <center>
       1) Post an activity you want to participate in. Make sure to include the date, time, and any additional details.
     </br></br>
-      2) When someone is interested in your acivity, they will select the going button and their name will be displayed.
+      2) When someone is interested in your activity, they will select the going button and their name will be displayed.
     </br></br>
       3) Enjoy your activity and new friends!
     </center>
@@ -117,32 +117,9 @@
             <p>Time:</p> <input type="time" v-model="add_time" class="input">
             <p>Location:</p><input type="location" v-model="add_location" class="input">
             <p>Event Information:</p><input type="text" v-model="add_text" class="input">
-            <!-- dropdown code -->
-            <div class="field">
-              <br>
-              <label class="label">Tags</label>
-              <div class="control">
-                <div class="select">
-                  <select>
-                    <option>C9</option>
-                    <option>C10</option>
-                    <option>Porter</option>
-                    <option>RCC</option>
-                    <option>Oakes</option>
-                    <option>Cowell</option>
-                    <option>Stevenson</option>
-                    <option>Kresge</option>
-                    <option>Merrill</option>
-                    <option>Crown</option>
-                    <option>Beach</option>
-                    <option>Art</option>
-                    <option>Sports</option>
-                    <option>Music</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <!-- dropdown code ends -->
+            <p>Tags:</p><input type="tag1" v-model="add_tag1" class="input">
+            <p><input type="tag2" v-model="add_tag2" class="input"></p>
+            <p><input type="tag3" v-model="add_tag3" class="input"></p>
           </div>
         </div>
         <div class="field">
@@ -168,18 +145,16 @@
               <div class="card-content">
                 <div class="content">
                   <h4><b>Location:</b> {{r.location}}</h4>
-                  <p><b>Event Information:</b> {{r.text}}</p>
                   <p><b>Date:</b> {{r.date}}</p>
                   <p><b>Time:</b> {{r.time}}</p>
+                  <p><b>Event Information:</b> {{r.text}}</p>
                   <p><b>Hosted By:</b> {{r.name}}</p>
-                  <p><b>Tags:</b></p>
+                  <p><b>Tags:</b> {{r.tag1}}, {{r.tag2}}, {{r.tag3}}</p>
                   <p><b>Going:</b> {{r.going}}</p>
                 </div>
 
                 <!-- code for thumbs -->
                 <div class="">
-                  <!-- <i class="fa fa-thumbs-up"></i> <i class="fa fa-thumbs-o-up"></i>
-            <i class="fa fa-thumbs-down"></i> <i class="fa fa-thumbs-o-down"></i> -->
                   <!-- code for delete -->
                   <span>
                     <div v-if="current_user_id==r.poster">
@@ -198,8 +173,6 @@
                       <!--<button @click="is_going(r._idx)">Not Going</button> -->
                       <span @click="is_going(r._idx)">Not Going</span>
                     </div>
-                    <!-- <i class="fa fa-thumbs-o-up"></i>
-              <i class="fa fa-thumbs-o-down"></i> -->
                   </span>
                 </div>
               </div>
@@ -209,10 +182,6 @@
         </div>
     </div>
   </div>
-
-
-
-
 
   [[block page_scripts]]
   <!-- Loads the index-specific js for Vue -->

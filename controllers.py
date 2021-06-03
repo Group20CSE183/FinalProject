@@ -70,6 +70,9 @@ def add_post():
         date=request.json.get('date'),
         time=request.json.get('time'),
         location=request.json.get('location'),
+        tag1=request.json.get('tag1'),
+        tag2=request.json.get('tag2'),
+        tag3=request.json.get('tag3'),
         going=0,
     )
     return dict(id=id,
