@@ -19,6 +19,12 @@ cd [name of folder]
 git checkout -b nameofbranch
 ```
 
+you then want to push your branch so it is recognized, so here you will enter 
+
+```
+git push --set-upstream origin nameofbranch
+```
+
 ### When you want to update your branch to what is in the main branch
 
 ```
