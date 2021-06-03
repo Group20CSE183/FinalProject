@@ -68,6 +68,6 @@ git push
 ```
 git checkout main
 git pull 
-git merge develop 
+git merge nameofbranch
 git push origin main
 ```
