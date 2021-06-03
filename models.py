@@ -32,6 +32,7 @@ db.define_table('posts',
                 Field('name'),
                 Field('going', type='integer',default='0'),
                 Field('is_going', type='boolean', default='false'),
+                Field('tags'),
             )
 
 db.define_table(
