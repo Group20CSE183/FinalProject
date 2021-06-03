@@ -102,6 +102,32 @@
             <p>Time:</p> <input type="time" v-model="add_time" class="input">
             <p>Location:</p><input type="location" v-model="add_location" class="input">
             <p>Event Information:</p><input type="text" v-model="add_text" class="input">
+            <!-- dropdown code -->
+            <div class="field">
+              <br>
+              <label class="label">Tags</label>
+              <div class="control">
+                <div class="select">
+                  <select>
+                    <option>C9</option>
+                    <option>C10</option>
+                    <option>Porter</option>
+                    <option>RCC</option>
+                    <option>Oakes</option>
+                    <option>Cowell</option>
+                    <option>Stevenson</option>
+                    <option>Kresge</option>
+                    <option>Merrill</option>
+                    <option>Crown</option>
+                    <option>Beach</option>
+                    <option>Art</option>
+                    <option>Sports</option>
+                    <option>Music</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- dropdown code ends -->
           </div>
         </div>
         <div class="field">
@@ -126,7 +152,9 @@
             <p><b>Location:</b> {{r.location}}</p>
             <p><b>Event Information:</b> {{r.text}}</p>
             <p><b>Name:</b> {{r.name}}</p>
+            <p><b>Tags:</b></p>
             <p><b>Going:</b> {{r.going}}</p>
+            
             <!-- code for thumbs -->
             <span>
               <div v-if="r.is_going">

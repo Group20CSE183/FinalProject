@@ -147,3 +147,27 @@ success!
 success!
 success!
 success!
+timestamp: 2021-06-02T17:50:53.712724
+ALTER TABLE "posts" ADD "user_email" CHAR(512);
+timestamp: 2021-06-02T17:50:53.750711
+ALTER TABLE "posts" ADD "poster" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ;
+timestamp: 2021-06-02T17:50:53.772706
+ALTER TABLE "posts" ADD "date" CHAR(512);
+timestamp: 2021-06-02T17:50:53.789699
+ALTER TABLE "posts" ADD "time" CHAR(512);
+timestamp: 2021-06-02T17:50:53.809693
+ALTER TABLE "posts" ADD "location" CHAR(512);
+timestamp: 2021-06-02T17:50:53.826687
+ALTER TABLE "posts" ADD "name" CHAR(512);
+timestamp: 2021-06-02T17:50:53.847680
+ALTER TABLE "posts" ADD "going" INTEGER;
+timestamp: 2021-06-02T17:50:53.866674
+ALTER TABLE "posts" ADD "is_going" CHAR(1);
+success!
+timestamp: 2021-06-02T17:50:53.890667
+CREATE TABLE "going"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "post" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE  ,
+    "people_going" CHAR(512)
+);
+success!
