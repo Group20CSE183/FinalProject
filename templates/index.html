@@ -99,7 +99,7 @@
           <label class="label">Post:</label>
           <div class="control">
             <p>Date:</p><input type="date" v-model="add_date" class="input">
-            <p>Time:</p><input type="time" v-model="add_time" class="input">
+            <p>Time:</p> <input type="time" v-model="add_time" class="input">
             <p>Location:</p><input type="location" v-model="add_location" class="input">
             <p>Event Information:</p><input type="text" v-model="add_text" class="input">
             <!-- dropdown code -->
@@ -141,43 +141,64 @@
 
     <!-- will contain the posts -->
     <div class="container block">
-      <div v-for="r in rows.reverse()">
-        <div class="box">
-          <p><b>Date:</b> {{r.date}}</p>
-          <p><b>Time:</b> {{r.time}}</p>
-          <p><b>Location:</b> {{r.location}}</p>
-          <p><b>Event Information:</b> {{r.text}}</p>
-          <p><b>Posted By:</b> {{r.user_firstname}} {{r.user_lastname}}</p>
-          <p><b>Tags:</b></p>
-          <!-- code for thumbs -->
-          <span>
-            <i class="fa fa-thumbs-o-up"></i>
-            <i class="fa fa-thumbs-o-down"></i>
-          </span>
-            <!-- <i class="fa fa-thumbs-up"></i> <i class="fa fa-thumbs-o-up"></i>
-          <i class="fa fa-thumbs-down"></i> <i class="fa fa-thumbs-o-down"></i> -->
-          <!-- code for delete -->
-          <span>
-            <button @click="delete_post(r._idx)" class="button is-danger is-pulled-right">
-              <i class="fa fa-trash"></i>
-            </button>
-          </span>
-
-        </div>
-      </div>
-        <button @click="set_add_status(true)" class="button is-dark align: right">
+      <button @click="set_add_status(true)" class="button is-dark align: right">
           <i class="fa fa-plus fa-fw"></i> Post An Activity
         </button>
+      <table class="table is-striped is-fullwidth">
+        <div v-for="r in rows">
+          <div class="box">
+            <p><b>Date:</b> {{r.date}}</p>
+            <p><b>Time:</b> {{r.time}}</p>
+            <p><b>Location:</b> {{r.location}}</p>
+            <p><b>Event Information:</b> {{r.text}}</p>
+            <p><b>Name:</b> {{r.name}}</p>
+            <p><b>Tags:</b></p>
+            <p><b>Going:</b> {{r.going}}</p>
+            
+            <!-- code for thumbs -->
+            <span>
+              <div v-if="r.is_going">
+                <button @click="is_going(r._idx)">Going</button>
+              </div>
+              <div v-else>
+                <button @click="is_going(r._idx)">Not Going</button>
+              </div>
+              <!-- <i class="fa fa-thumbs-o-up"></i>
+              <i class="fa fa-thumbs-o-down"></i> -->
+            </span>
+            <!-- <i class="fa fa-thumbs-up"></i> <i class="fa fa-thumbs-o-up"></i>
+            <i class="fa fa-thumbs-down"></i> <i class="fa fa-thumbs-o-down"></i> -->
+            <!-- code for delete -->
+            <span>
+              <div v-if="current_user_id==r.poster">
+                <button @click="delete_post(r._idx)" class="button is-danger is-pulled-right" @mouseenter="show_going(true, r._idx)" @mouseleave="show_going(false)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </span>
+
+          </div>
+        </div>
+        
     </div>
   </div>
 </div>
 
+
+
+
+
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
 <script>
+  let my_callback_url = "[[=XML(my_callback_url)]]";
   let load_posts_url = "[[=XML(load_posts_url)]]";
   let add_post_url = "[[=XML(add_post_url)]]";
   let delete_post_url = "[[=XML(delete_post_url)]]";
+  let user_email = "[[=XML(user_email)]]";
+  let username = "[[=XML(username)]]";
+  let update_going_url = "[[=XML(update_going_url)]]";
+  let get_going_url = "[[=XML(get_going_url)]]";
 </script>
 <script src="js/index.js"></script>
 [[end]]

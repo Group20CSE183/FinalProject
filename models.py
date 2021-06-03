@@ -10,18 +10,11 @@ from pydal.validators import *
 def get_user_email():
     return auth.current_user.get('email') if auth.current_user else None
 
-def get_user_firstname():
-    return auth.current_user.get('first_name') if auth.current_user else None
-
-def get_user_lastname():
-    return auth.current_user.get('last_name') if auth.current_user else None
-
-def get_user():
-    return auth.current_user.get('id') if auth.current_user else None
-
 def get_time():
     return datetime.datetime.utcnow()
 
+def get_user():
+    return auth.current_user.get('id') if auth.current_user else None
 
 ### Define your table below
 #
@@ -29,15 +22,23 @@ def get_time():
 #
 ## always commit your models to avoid problems later
 
-db.define_table('post',
+db.define_table('posts',
                 Field('user_email', default=get_user_email),
-                Field('user_firstname', default = get_user_firstname),
-                Field('user_lastname', default = get_user_lastname),
+                Field('poster', 'reference auth_user', default=get_user),
                 Field('text', requires=IS_NOT_EMPTY()),
                 Field('date', requires=IS_NOT_EMPTY()),
                 Field('time', requires=IS_NOT_EMPTY()),
                 Field('location', requires=IS_NOT_EMPTY()),
-                Field('tags')
+                Field('name'),
+                Field('going', type='integer',default='0'),
+                Field('is_going', type='boolean', default='false'),
+                Field('tags'),
             )
+
+db.define_table(
+    'going',
+    Field('post', 'reference posts'),
+    Field('people_going', default=get_user)
+    )
 
 db.commit()
