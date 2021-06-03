@@ -14,12 +14,18 @@ cd [name of folder]
 
 ----------------------------------------------------------
 
-When you want to update your project to what is in the server
+#### To Create Your Own Branch 
+```
+git checkout -b nameofbranch
+```
 
-#### please note: you want to update your local repo every single time before making changes to it 
+When you want to update your branch to what is in the main branch
 
 ```
-git pull
+git checkout main 
+git pull 
+git checkout nameofbranch
+git merge main 
 ```
 
 To check the status of your local repo
@@ -27,6 +33,16 @@ To check the status of your local repo
 ``` 
 git status 
 ```
+
+To switch between branches 
+
+```
+git checkout main
+
+git checkout nameofbranch
+```
+
+### PLEASE NOTE: When you make changes, make sure you are in your own branch! 
 
 Here, it should say you are on the main branch and that everything is up to date. 
 
@@ -40,3 +56,11 @@ git commit -m [commit message]
 git push 
 ```
 
+### To push from your local branch to the main branch 
+
+```
+git checkout master 
+git pull 
+git merge develop 
+git push origin master
+```
