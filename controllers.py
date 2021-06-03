@@ -29,7 +29,7 @@ from py4web import action, request, abort, redirect, URL
 from yatl.helpers import A
 from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
 from py4web.utils.url_signer import URLSigner
-from .models import get_user_email, get_user
+from .models import get_user_email
 
 url_signer = URLSigner(session)
 
@@ -38,35 +38,85 @@ url_signer = URLSigner(session)
 def index():
     return dict(
         # COMPLETE: return here any signed URLs you need.
+        my_callback_url = URL('my_callback', signer=url_signer),
         load_posts_url = URL('load_posts', signer=url_signer),
         add_post_url = URL('add_post', signer=url_signer),
         delete_post_url = URL('delete_post', signer=url_signer),
-        # user_email = get_user_email(),
-        # username = auth.current_user.get('first_name') + " " + auth.current_user.get("last_name"),
+        update_going_url = URL('update_going', signer=url_signer),
+        user_email = get_user_email(),
+        username = auth.current_user.get('first_name') + " " + auth.current_user.get("last_name"),
+        get_going_url = URL('get_going', signer=url_signer),
     )
 
 @action('load_posts')
 @action.uses(url_signer.verify(), db)
 def load_posts():
-    rows = db(db.post).select().as_list()
-    return dict(rows=rows)
+    rows = db(db.posts).select().as_list()
+    rows.reverse()
+    current_user_email = get_user_email()
+    current_user_row = db(db.auth_user.email == current_user_email).select().first()
+    return dict(rows=rows,
+    current_user_id=current_user_row.id,)
 
 @action('add_post', method="POST")
 @action.uses(url_signer.verify(), db)
 def add_post():
-    id = db.post.insert(
+    user_id = get_user_email()
+    r = db(db.auth_user.email == user_id).select().first()
+    name = r.first_name + " " + r.last_name if r is not None else "Unknown"
+    id = db.posts.insert(
         text=request.json.get('text'),
+        name=name,
         date=request.json.get('date'),
         time=request.json.get('time'),
-        location=request.json.get('location')
+        location=request.json.get('location'),
+        going=0,
     )
-    return dict(id=id)
+    return dict(id=id,
+    name=name,)
 
 @action('delete_post')
-@action.uses(url_signer.verify(), auth.user, db)
+@action.uses(url_signer.verify(), db)
 def delete_post():
     id = request.params.get('id')
-    # user_email = get_user_email()
     assert id is not None
-    # assert user_email is not None
-    db(db.post.id == id).delete()
+    db(db.posts.id == id).delete()
+    return "ok"
+
+# runs this if someone clicks going button
+@action('update_going')
+@action.uses(url_signer.verify(),db)
+def update_going():
+    id = request.params.get('id')
+    assert id is not None
+    row=db(db.posts.id == id).select().first()
+    if row.is_going is False:
+        row.going=row.going+1
+        db(db.posts.id == id).update(
+            going=row.going,
+            is_going=True
+        )
+    elif row.is_going is True:
+        row.going=row.going-1
+        db(db.posts.id == id).update(
+            going=row.going,
+            is_going=False
+        )
+    # row.update_record()
+    
+    # print("test")
+
+@action('get_going')
+@action.uses(url_signer.verify(), db)
+def get_going():
+    post_id = int(request.params.get('post_id'))
+
+    num_going = 0
+
+    for row in db(db.going.post == post_id).select():
+        id = db(db.auth_user.id == row.going).select().first()
+        num_going = num_going + 1
+    
+    print("test")
+
+    return dict(num_going=num_going)
