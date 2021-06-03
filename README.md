@@ -25,15 +25,6 @@ you then want to push your branch so it is recognized, so here you will enter
 git push --set-upstream origin nameofbranch
 ```
 
-### When you want to update your branch to what is in the main branch
-
-```
-git checkout main 
-git pull 
-git checkout nameofbranch
-git merge main 
-```
-
 To check the status of your local repo
 
 ``` 
@@ -53,6 +44,16 @@ git checkout nameofbranch
 Here, it should say you are on the main branch and that everything is up to date. 
 
 if it does not say this, it will usually say you have made to changes to the repo and you need to push those changes. And so then you can make changes by following the instructions below. 
+
+
+### When you want to update your branch to what is in the main branch
+
+```
+git checkout main 
+git pull 
+git checkout nameofbranch
+git merge main 
+```
 
 When you make changes and want to send to the project
 
