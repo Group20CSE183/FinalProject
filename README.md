@@ -59,8 +59,8 @@ git push
 ### To push from your local branch to the main branch 
 
 ```
-git checkout master 
+git checkout main
 git pull 
 git merge develop 
-git push origin master
+git push origin main
 ```
