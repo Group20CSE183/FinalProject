@@ -55,6 +55,23 @@ git checkout nameofbranch
 git merge main 
 ```
 
+### If it says you have conflicts
+
+it will be structured like this 
+```
+<<< head
+=======
+>>> new_branch_to_merge_later
+```
+ between head and =====
+ is what exists in the current branch 
+ 
+ between ===== and >>> new_branch_to_merge_later 
+ what exists in the merging branch 
+ 
+ Take off the >>> head, =====, and >>> new_branch_to_merge_later
+
+
 When you make changes and want to send to the project
 
 ```
