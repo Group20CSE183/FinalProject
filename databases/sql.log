@@ -237,3 +237,20 @@ success!
 success!
 success!
 success!
+success!
+timestamp: 2021-06-03T20:44:54.974685
+ALTER TABLE "posts" ADD "going_list" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

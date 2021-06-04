@@ -22,6 +22,7 @@ let init = (app) => {
         rows: [],
         user_email: user_email,
         userName : username,
+        going_list: [],
     };
 
     app.enumerate = (a) => {
@@ -43,6 +44,7 @@ let init = (app) => {
                 tag2: app.vue.add_tag2,
                 tag3: app.vue.add_tag3,
                 going: 1,
+                going_list: app.vue.add_going_list,
             }
             ).then(function (response) {
             app.vue.rows.unshift({
@@ -59,7 +61,8 @@ let init = (app) => {
                 tag3: app.vue.add_tag3,
                 going: 0,
                 is_going: false,
-                cur_idx: -1
+                cur_idx: -1,
+                going_list: [],
             });
             app.enumerate(app.vue.rows);
             app.reset_form();
@@ -99,6 +102,7 @@ let init = (app) => {
         // post=3;
         axios.get(update_going_url, {params: {id: x.id}}).then(function (response) {
             x.going = response.data.going;
+            x.going_list.append("asdf")
         });
     };
 

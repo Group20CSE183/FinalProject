@@ -78,6 +78,7 @@ def add_post():
         tag2=request.json.get('tag2'),
         tag3=request.json.get('tag3'),
         going=0,
+        going_list=[],
     )
     return dict(id=id,
     name=name,)
@@ -114,12 +115,24 @@ def add_tags():
 def update_going():
     id = request.params.get('id')
     assert id is not None
+    a = "test"
     row=db(db.posts.id == id).select().first()
+    b=row.going_list
+    b.append(get_user_email())
+    print(b)
+
+    db(db.posts.id == id).update(
+            #  going_list.append("asdf")
+             going_list = b
+         )
+    
+   
     if row.is_going is False:
         row.going=row.going+1
         db(db.posts.id == id).update(
             going=row.going,
-            is_going=True
+            is_going=True,
+            
         )
     elif row.is_going is True:
         row.going=row.going-1

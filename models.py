@@ -35,6 +35,7 @@ db.define_table('posts',
                 Field('tag1'),
                 Field('tag2'),
                 Field('tag3'),
+                Field('going_list', type='list:string'),
             )
 
 db.define_table('tags',
