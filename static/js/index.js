@@ -102,7 +102,7 @@ let init = (app) => {
         // post=3;
         axios.get(update_going_url, {params: {id: x.id}}).then(function (response) {
             x.going = response.data.going;
-            x.going_list.append("asdf")
+            // x.going_list.append("asdf")
         });
     };
 

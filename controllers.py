@@ -118,7 +118,13 @@ def update_going():
     a = "test"
     row=db(db.posts.id == id).select().first()
     b=row.going_list
-    b.append(get_user_email())
+    if get_user_email() in b:
+        # going button was already pressed
+        # remove user email from going_list
+        b.remove(get_user_email())
+    else: # going button was not pressed
+        b.append(get_user_email())
+    
     print(b)
 
     db(db.posts.id == id).update(
