@@ -171,3 +171,6 @@ CREATE TABLE "going"(
     "people_going" CHAR(512)
 );
 success!
+timestamp: 2021-06-03T19:56:25.157136
+ALTER TABLE "posts" ADD "tags" CHAR(512);
+success!
