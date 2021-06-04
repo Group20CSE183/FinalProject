@@ -71,6 +71,7 @@ it will be structured like this
  
  Take off the >>> head, =====, and >>> new_branch_to_merge_later
 
+After doing this, you want to add and commit and push these changes
 
 When you make changes and want to send to the project
 
