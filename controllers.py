@@ -41,7 +41,11 @@ def index():
         my_callback_url = URL('my_callback', signer=url_signer),
         load_posts_url = URL('load_posts', signer=url_signer),
         add_post_url = URL('add_post', signer=url_signer),
+        add_tags_url = URL('add_tags', signer=url_signer),
+        add_post_tag_url = URL('add_post_tag', signer=url_signer),
+        delete_tags_url = URL('delete_tags', signer=url_signer),
         delete_post_url = URL('delete_post', signer=url_signer),
+        delete_post_tag_url = URL('delete_post_tag', signer=url_signer),
         update_going_url = URL('update_going', signer=url_signer),
         user_email = get_user_email(),
         username = auth.current_user.get('first_name') + " " + auth.current_user.get("last_name"),
@@ -84,11 +88,29 @@ def delete_post():
     id = request.params.get('id')
     assert id is not None
     db(db.posts.id == id).delete()
-    return "ok"
+
+@action('add_tags', method="POST")
+@action.uses(url_signer.verify(), db)
+def add_tags():
+    print("called add tags")
+    id = db.tags.insert(
+        tag1=request.json.get('tag1'),
+        tag2=request.json.get('tag2'),
+        tag3=request.json.get('tag3'),
+    )
+    return dict(id=id)
+
+# @action('delete_tags')
+# @action.uses(url_signer.verify(), db)
+# def delete_tags():
+#     print("called delete tags")
+#     post_id = request.params.get('post_id')
+#     assert post_id is not None
+#     db(db.tags.post_id == post_id).delete()
 
 # runs this if someone clicks going button
 @action('update_going')
-@action.uses(url_signer.verify(),db)
+@action.uses(url_signer.verify(), db)
 def update_going():
     id = request.params.get('id')
     assert id is not None

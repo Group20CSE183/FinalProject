@@ -188,3 +188,52 @@ success!
 success!
 success!
 success!
+success!
+timestamp: 2021-06-02T23:52:38.386729
+CREATE TABLE "tags"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "post_id" INTEGER REFERENCES "posts" ("id") ON DELETE CASCADE  ,
+    "tag1" CHAR(512),
+    "tag2" CHAR(512),
+    "tag3" CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

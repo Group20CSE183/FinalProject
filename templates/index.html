@@ -124,7 +124,7 @@
         </div>
         <div class="field">
           <div class="control">
-            <input type="submit" @click="add_post" value="Add" class="button is-primary">
+            <input type="submit" @click="add_post" value="Add" class="button is-primary"> <!-- add_post and add_tags onclick? -->
             <input type="submit" @click="set_add_status(false)" value="Cancel" class="button is-warning">
           </div>
         </div>
@@ -149,7 +149,7 @@
                   <p><b>Time:</b> {{r.time}}</p>
                   <p><b>Event Information:</b> {{r.text}}</p>
                   <p><b>Hosted By:</b> {{r.name}}</p>
-                  <p><b>Tags:</b> {{r.tag1}}, {{r.tag2}}, {{r.tag3}}</p>
+                  <p><b>Tags:</b> {{r.tag1}} {{r.tag2}} {{r.tag3}}</p>
                   <p><b>Going:</b> {{r.going}}</p>
                 </div>
 
@@ -159,7 +159,7 @@
                   <span>
                     <div v-if="current_user_id==r.poster">
                       <button @click="delete_post(r._idx)" class="button is-danger is-pulled-right"
-                        @mouseenter="show_going(true, r._idx)" @mouseleave="show_going(false)">
+                        @mouseenter="show_going(true, r._idx)" @mouseleave="show_going(false)"> <!-- delete_post and delete_tags onclick? -->
                         <i class="fa fa-trash"></i>
                       </button>
                     </div>
@@ -189,7 +189,11 @@
     let my_callback_url = "[[=XML(my_callback_url)]]";
     let load_posts_url = "[[=XML(load_posts_url)]]";
     let add_post_url = "[[=XML(add_post_url)]]";
+    let add_tags_url = "[[=XML(add_tags_url)]]";
+    let add_post_tag_url = "[[=XML(add_post_tag_url)]]";
+    // let delete_tags_url = "[[=XML(delete_tags_url)]]";
     let delete_post_url = "[[=XML(delete_post_url)]]";
+    // let delete_post_tag_url = "[[=XML(delete_post_tag_url)]]";
     let user_email = "[[=XML(user_email)]]";
     let username = "[[=XML(username)]]";
     let update_going_url = "[[=XML(update_going_url)]]";

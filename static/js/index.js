@@ -32,6 +32,7 @@ let init = (app) => {
     };
 
     app.add_post = function () {
+        console.log("add_post called")
         axios.post(add_post_url,
             {
                 text: app.vue.add_text,
@@ -64,6 +65,32 @@ let init = (app) => {
             app.reset_form();
             app.set_add_status(false);
         });
+    };
+
+    app.add_tags = function () {
+        console.log("add_tags called")
+        axios.post(add_tags_url,
+            {
+                tag1: app.vue.add_tag1,
+                tag2: app.vue.add_tag2,
+                tag3: app.vue.add_tag3,
+            }
+            ).then(function (response) {
+            app.vue.rows.unshift({
+                tag1: app.vue.add_tag1,
+                tag2: app.vue.add_tag2,
+                tag3: app.vue.add_tag3,
+            });
+            app.enumerate(app.vue.rows);
+            // app.reset_form();
+            // app.set_add_status(false);
+        });
+    };
+
+    app.add_post_tag = function () {
+        console.log("add_post_tag working")
+        app.add_tags()
+        app.add_post()
     };
 
     app.is_going = function (row_idx){
@@ -103,6 +130,26 @@ let init = (app) => {
             });
     };
 
+    // app.delete_tags = function (row_idx) {
+    //     print("delete_tags working")
+    //     let id = app.vue.rows[row_idx].id;
+    //     axios.get(delete_tags_url, {params: {id: id}}).then(function (response) {
+    //         for (let i = 0; i < app.vue.rows.length; i++) {
+    //             if (app.vue.rows[i].id === id) {
+    //                 app.vue.rows.splice(i, 1);
+    //                 app.enumerate(app.vue.rows);
+    //                 break;
+    //             }
+    //         }
+    //         });
+    // };
+
+    // app.delete_post_tag = function (row_idx) {
+    //     print("delete_post_tag working")
+    //     app.delete_post(row_idx)
+    //     app.delete_tags(row_idx)
+    // };
+
     app.complete = () => {
         let text = app.data.text
         let date = app.data.date
@@ -130,7 +177,7 @@ let init = (app) => {
             new_post = {
                 name : app.data.userName,
                 text : app.data.text,
-                date: app.data.date,
+                date : app.data.date,
                 time : app.data.time,
                 location : app.data.location,
                 tag1 : app.data.tag1,
@@ -155,6 +202,10 @@ let init = (app) => {
     app.methods = {
         // Complete as you see fit.
         add_post: app.add_post,
+        add_tags: app.add_tags,
+        add_post_tag: app.add_post_tag,
+        // delete_tags: app.delete_tags,
+        // delete_post_tag: app.delete_post_tag,
         set_add_status: app.set_add_status,
         delete_post: app.delete_post,
         is_going: app.is_going,
@@ -175,9 +226,6 @@ let init = (app) => {
         axios.get(load_posts_url).then(function (response) {
             rows = response.data.rows;
             app.vue.current_user_id = response.data.current_user_id;
-            // var post_list = response.data.posts
-            // var reverseList = post_list.reverse()
-            // app.vue.posts = app.reindex(reverseList);
             app.enumerate(rows);
             //app.complete(rows);
             app.vue.rows=rows;
