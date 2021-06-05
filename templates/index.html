@@ -151,28 +151,23 @@
                   <p><b>Hosted By:</b> {{r.name}}</p>
                   <p><b>Tags:</b> {{r.tag1}} {{r.tag2}} {{r.tag3}}</p>
                   <p><b>Going:</b> {{r.going}}</p>
-                  <h1 v-show="ok">Hello!</h1>
                 </div>
-
-                <!-- code for thumbs -->
                 <div class="">
                   <!-- code for delete -->
                   <span>
                     <div v-if="current_user_id==r.poster">
                       <button @click="delete_post(r._idx)" class="button is-danger is-pulled-right"
-                        @mouseenter="show_going(true, r._idx)" @mouseleave="show_going(false)"> <!-- delete_post and delete_tags onclick? -->
+                        @mouseenter="show_going(true, r._idx)" @mouseleave="show_going(false)"> 
                         <i class="fa fa-trash"></i>
                       </button>
                     </div>
                   </span>
-                  <span>
-                    <div class="button is-link" v-if="r.is_going">
-                      <!--<button @click="is_going(r._idx)">Going</button> -->
+                  <span v-if="current_user_id!=r.poster">
+                    <div class="button is-link"> 
                       <span @click="is_going(r._idx)">Going</span>
                     </div>
-                    <div class="button is-link" v-else>
-                      <!--<button @click="is_going(r._idx)">Not Going</button> -->
-                      <span @click="is_going(r._idx)">Not Going</span>
+                    <div class="button is-link">
+                      <span @click="is_not_going(r._idx)">Not Going</span>
                     </div>
                   </span>
                 </div>
@@ -191,13 +186,11 @@
     let load_posts_url = "[[=XML(load_posts_url)]]";
     let add_post_url = "[[=XML(add_post_url)]]";
     let add_tags_url = "[[=XML(add_tags_url)]]";
-    let add_post_tag_url = "[[=XML(add_post_tag_url)]]";
-    // let delete_tags_url = "[[=XML(delete_tags_url)]]";
     let delete_post_url = "[[=XML(delete_post_url)]]";
-    // let delete_post_tag_url = "[[=XML(delete_post_tag_url)]]";
     let user_email = "[[=XML(user_email)]]";
     let username = "[[=XML(username)]]";
     let update_going_url = "[[=XML(update_going_url)]]";
+    let update_not_going_url = "[[=XML(update_not_going_url)]]";
     let get_going_url = "[[=XML(get_going_url)]]";
   </script>
   <script src="js/index.js"></script>

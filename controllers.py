@@ -46,10 +46,11 @@ def index():
         delete_tags_url = URL('delete_tags', signer=url_signer),
         delete_post_url = URL('delete_post', signer=url_signer),
         delete_post_tag_url = URL('delete_post_tag', signer=url_signer),
-        update_going_url = URL('update_going', signer=url_signer),
         user_email = get_user_email(),
         username = auth.current_user.get('first_name') + " " + auth.current_user.get("last_name"),
         get_going_url = URL('get_going', signer=url_signer),
+        update_going_url = URL('update_going', signer=url_signer),
+        update_not_going_url = URL('update_not_going', signer=url_signer),
     )
 
 @action('load_posts')
@@ -118,21 +119,18 @@ def update_going():
     a = "test"
     row=db(db.posts.id == id).select().first()
     b=row.going_list
-    if get_user_email() in b:
-        # going button was already pressed
-        # remove user email from going_list
-        db(db.posts.id == id).update(
-            going=row.going-1
-        )
-        b.remove(get_user_email())
-    else: # going button was not pressed
+    
+    # going
+    # either in going_list already, do nothing
+    # or add to going_list
+    if get_user_email() not in b:
         b.append(get_user_email())
         db(db.posts.id == id).update(
             going=row.going+1
         )
     
-    print(b)
-    print(len(b))
+    # print("List: ",b)
+    # print("length: ",len(b))
 
     db(db.posts.id == id).update(
             #  going_list.append("asdf")
@@ -140,21 +138,33 @@ def update_going():
          )
     
     return dict(num_going=len(b))
-    # row.update_record()
+
+@action('update_not_going')
+@action.uses(url_signer.verify(), db)
+def update_not_going():
+    id = request.params.get('id')
+    assert id is not None
+    # a = "test"
+    row=db(db.posts.id == id).select().first()
+    b=row.going_list
+    # print("testtest")
+
+    if get_user_email() in b:
+        # going button was already pressed
+        # remove user email from going_list
+        # not going
+        # print("test")
+        db(db.posts.id == id).update(
+            going=row.going-1
+        )
+        b.remove(get_user_email())
     
-    # print("test")
+    print("List: ",b)
+    print("length: ",len(b))
 
-# @action('get_going')
-# @action.uses(url_signer.verify(), db)
-# def get_going():
-#     post_id = int(request.params.get('post_id'))
-
-#     num_going = 0
-
-#     for row in db(db.going.post == post_id).select():
-#         id = db(db.auth_user.id == row.going).select().first()
-#         num_going = num_going + 1
+    db(db.posts.id == id).update(
+            #  going_list.append("asdf")
+             going_list = b
+         )
     
-#     print("test")
-
-#     return dict(num_going=num_going)
+    return dict(num_going=len(b))

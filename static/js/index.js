@@ -103,6 +103,14 @@ let init = (app) => {
         let x = app.vue.rows[row_idx];
         app.enumerate(app.vue.rows);
         // window.location.reload() // EMERGENCY ONLY
+        // document.location.reload()
+        location.reload(true);
+        // object.reload(forcedReload);
+        // history.go(0);
+        // setTimeout(location.reload)
+
+          
+
         // post=3;
         axios.get(update_going_url, {params: {id: x.id}}).then(function (response) {
             x.going = response.data.going;
@@ -110,6 +118,48 @@ let init = (app) => {
             // x.going_list.append("asdf")
         });
     };
+
+    app.is_not_going = function (row_idx){ // this runs when you click the going button
+        // let x = app.vue.rows[row_idx].going;
+        let x = app.vue.rows[row_idx];
+        app.enumerate(app.vue.rows);
+        // window.location.reload() // EMERGENCY ONLY
+        // document.location.reload()
+        location.reload(true); // works 90%???
+        // object.reload(forcedReload);
+        // history.go(0);
+        // setTimeout(location.reload)
+
+          
+
+        // post=3;
+        axios.get(update_not_going_url, {params: {id: x.id}}).then(function (response) {
+            x.going = response.data.going;
+            
+            // x.going_list.append("asdf")
+        });
+    };
+
+    app.show_button = function (row_idx){
+        // let x = app.vue.rows[row_idx];
+        // let y = x.going_list;
+        // let e = user_email;
+        // console.log(y[0]);
+        // console.log(y.length);
+        // for(let i=0;i<y.length;i++)
+        // {
+        //     if(y[i]!=null)
+        //     {
+        //         if(y[i]==(e))
+        //         {
+        //             console.log("true");
+        //             return true;
+        //         }
+        //     }
+            
+        // }
+        return false;
+    }
 
     app.show_going = function (status, index){
         app.vue.show_going_status = status;
@@ -219,7 +269,9 @@ let init = (app) => {
         set_add_status: app.set_add_status,
         delete_post: app.delete_post,
         is_going: app.is_going,
-        show_going: app.show_going
+        show_going: app.show_going,
+        show_button: app.show_button,
+        is_not_going: app.is_not_going,
     };
 
     // This creates the Vue instance.
