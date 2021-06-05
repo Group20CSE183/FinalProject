@@ -45,10 +45,10 @@ db.define_table('tags',
     Field('tag3'),
 )
 
-db.define_table(
-    'going',
-    Field('post', 'reference posts'),
-    Field('people_going', default=get_user)
-    )
+# db.define_table(
+#     'going',
+#     Field('post', 'reference posts'),
+#     Field('people_going', default=get_user)
+#     )
 
 db.commit()

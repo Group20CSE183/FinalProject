@@ -22,7 +22,9 @@ let init = (app) => {
         rows: [],
         user_email: user_email,
         userName : username,
+        add_going: 0,
         going_list: [],
+        num_going: 0,
     };
 
     app.enumerate = (a) => {
@@ -43,7 +45,7 @@ let init = (app) => {
                 tag1: app.vue.add_tag1,
                 tag2: app.vue.add_tag2,
                 tag3: app.vue.add_tag3,
-                going: 1,
+                going: app.vue.add_going,
                 going_list: app.vue.add_going_list,
             }
             ).then(function (response) {
@@ -59,7 +61,7 @@ let init = (app) => {
                 tag1: app.vue.add_tag1,
                 tag2: app.vue.add_tag2,
                 tag3: app.vue.add_tag3,
-                going: 0,
+                going: app.vue.add_going,
                 is_going: false,
                 cur_idx: -1,
                 going_list: [],
@@ -96,12 +98,15 @@ let init = (app) => {
         app.add_post()
     };
 
-    app.is_going = function (row_idx){
+    app.is_going = function (row_idx){ // this runs when you click the going button
         // let x = app.vue.rows[row_idx].going;
         let x = app.vue.rows[row_idx];
+        app.enumerate(app.vue.rows);
+        // window.location.reload() // EMERGENCY ONLY
         // post=3;
         axios.get(update_going_url, {params: {id: x.id}}).then(function (response) {
             x.going = response.data.going;
+            
             // x.going_list.append("asdf")
         });
     };
@@ -189,6 +194,7 @@ let init = (app) => {
                 tag3 : app.data.tag3,
                 user_email : app.data.user_email,
                 id : id,
+                going: app.data.going,
                 rating : {
                     rating : -1
                 }
@@ -230,16 +236,17 @@ let init = (app) => {
         axios.get(load_posts_url).then(function (response) {
             rows = response.data.rows;
             app.vue.current_user_id = response.data.current_user_id;
+            app.vue.num_going = response.data.num_going;
             app.enumerate(rows);
             //app.complete(rows);
             app.vue.rows=rows;
         }).then(() => {
-            for(let post of app.vue.rows){
-                // axios.get(get_going_url, {params: {"post_id": post.id}}).then((response) =>{
-                //     post.is_going = response.data.going;
-                //     post.num_going = response.data.num_going;
-                // });
-            }
+            // for(let post of app.vue.rows){
+            //     // axios.get(get_going_url, {params: {"post_id": post.id}}).then((response) =>{
+            //     //     post.is_going = response.data.going;
+            //     //     post.num_going = response.data.num_going;
+            //     // });
+            // }
         });
     };
 

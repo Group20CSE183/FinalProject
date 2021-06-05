@@ -77,7 +77,7 @@ def add_post():
         tag1=request.json.get('tag1'),
         tag2=request.json.get('tag2'),
         tag3=request.json.get('tag3'),
-        going=0,
+        going=request.json.get('going'),
         going_list=[],
     )
     return dict(id=id,
@@ -121,46 +121,40 @@ def update_going():
     if get_user_email() in b:
         # going button was already pressed
         # remove user email from going_list
+        db(db.posts.id == id).update(
+            going=row.going-1
+        )
         b.remove(get_user_email())
     else: # going button was not pressed
         b.append(get_user_email())
+        db(db.posts.id == id).update(
+            going=row.going+1
+        )
     
     print(b)
+    print(len(b))
 
     db(db.posts.id == id).update(
             #  going_list.append("asdf")
              going_list = b
          )
     
-   
-    if row.is_going is False:
-        row.going=row.going+1
-        db(db.posts.id == id).update(
-            going=row.going,
-            is_going=True,
-            
-        )
-    elif row.is_going is True:
-        row.going=row.going-1
-        db(db.posts.id == id).update(
-            going=row.going,
-            is_going=False
-        )
+    return dict(num_going=len(b))
     # row.update_record()
     
     # print("test")
 
-@action('get_going')
-@action.uses(url_signer.verify(), db)
-def get_going():
-    post_id = int(request.params.get('post_id'))
+# @action('get_going')
+# @action.uses(url_signer.verify(), db)
+# def get_going():
+#     post_id = int(request.params.get('post_id'))
 
-    num_going = 0
+#     num_going = 0
 
-    for row in db(db.going.post == post_id).select():
-        id = db(db.auth_user.id == row.going).select().first()
-        num_going = num_going + 1
+#     for row in db(db.going.post == post_id).select():
+#         id = db(db.auth_user.id == row.going).select().first()
+#         num_going = num_going + 1
     
-    print("test")
+#     print("test")
 
-    return dict(num_going=num_going)
+#     return dict(num_going=num_going)
