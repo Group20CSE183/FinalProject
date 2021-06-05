@@ -151,6 +151,28 @@
                   <p><b>Hosted By:</b> {{r.name}}</p>
                   <p><b>Tags:</b> {{r.tag1}} {{r.tag2}} {{r.tag3}}</p>
                   <p><b>Going:</b> {{r.going}}</p>
+                  
+                  <div v-if="current_user_id==r.poster">
+                    <div v-if="!r.thumbnail">
+                      <p class="control">
+                        <div class="file is-info">
+                          <label class="file-label">
+                            <input class="file-input" type="file"
+                                  accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                                  @change="upload_file($event, r._idx)">
+                            <span class="file-cta">
+                              <span class="file-label">
+                                <span><i class="fa fa-upload"></i></span>
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                      </p>
+                    </div>
+                  </div>
+                  <img v-if="r.thumbnail" width="50" :src="r.thumbnail" />
+        
+
                 </div>
                 <div class="">
                   <!-- code for delete -->
@@ -192,6 +214,7 @@
     let update_going_url = "[[=XML(update_going_url)]]";
     let update_not_going_url = "[[=XML(update_not_going_url)]]";
     let get_going_url = "[[=XML(get_going_url)]]";
+    let upload_thumbnail_url = "[[=XML(upload_thumbnail_url)]]";
   </script>
   <script src="js/index.js"></script>
   [[end]]

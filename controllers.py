@@ -51,6 +51,7 @@ def index():
         get_going_url = URL('get_going', signer=url_signer),
         update_going_url = URL('update_going', signer=url_signer),
         update_not_going_url = URL('update_not_going', signer=url_signer),
+        upload_thumbnail_url = URL('upload_thumbnail', signer=url_signer),
     )
 
 @action('load_posts')
@@ -168,3 +169,12 @@ def update_not_going():
          )
     
     return dict(num_going=len(b))
+
+@action('upload_thumbnail', method="POST")
+@action.uses(url_signer.verify(), db)
+def upload_thumbnail():
+    id = request.json.get("id")
+    thumbnail = request.json.get("thumbnail")
+    db(db.posts.id == id).update(thumbnail=thumbnail)
+    print
+    return "ok"

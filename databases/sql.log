@@ -359,3 +359,22 @@ success!
 success!
 success!
 success!
+success!
+timestamp: 2021-06-05T15:57:07.813943
+ALTER TABLE "posts" ADD "thumbnail" TEXT;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

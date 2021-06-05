@@ -36,6 +36,7 @@ db.define_table('posts',
                 Field('tag2'),
                 Field('tag3'),
                 Field('going_list', type='list:string'),
+                Field('thumbnail','text'),
             )
 
 db.define_table('tags',

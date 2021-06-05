@@ -189,6 +189,8 @@ let init = (app) => {
             });
     };
 
+    
+
     // app.delete_tags = function (row_idx) {
     //     print("delete_tags working")
     //     let id = app.vue.rows[row_idx].id;
@@ -258,6 +260,30 @@ let init = (app) => {
         app.vue.add_mode = new_status;
     };
 
+    app.upload_file = function (event, row_idx) {
+        console.log("TET")
+        let input = event.target;
+        let file = input.files[0];
+        let row = app.vue.rows[row_idx];
+        if (file) {
+            let reader = new FileReader();
+            reader.addEventListener("load", function () {
+                // Sends the image to the server.
+                axios.post(upload_thumbnail_url,
+                    {
+                        id: row.id,
+                        thumbnail: reader.result,
+                    })
+                    .then(function () {
+                        // Sets the local preview.
+                        row.thumbnail = reader.result;
+
+                    });
+            });
+            reader.readAsDataURL(file);
+        }
+    };
+
     // This contains all the methods.
     app.methods = {
         // Complete as you see fit.
@@ -271,7 +297,9 @@ let init = (app) => {
         is_going: app.is_going,
         show_going: app.show_going,
         show_button: app.show_button,
+        upload_file: app.upload_file,
         is_not_going: app.is_not_going,
+        
     };
 
     // This creates the Vue instance.
