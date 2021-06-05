@@ -113,6 +113,7 @@ def add_tags():
 @action('update_going')
 @action.uses(url_signer.verify(), db)
 def update_going():
+    print("UPDATE GOING")
     id = request.params.get('id')
     assert id is not None
     a = "test"
@@ -138,7 +139,45 @@ def update_going():
             #  going_list.append("asdf")
              going_list = b
          )
-    
+
+    email = get_user_email()
+    user_row = db(db.auth_user.email == email).select().first()
+
+    going_db = db(db.going).select().as_list()
+    print("GOING DB LEN ", len(going_db))
+    print(going_db[0]['post_id'])
+    print("type")
+    print(type(int(id)))
+    print(type(going_db[0]['post_id']))
+
+    goingList = []
+
+    if len(going_db) == 0:
+        db.going.insert(
+            user_id = user_row.id,
+            post_id = id,
+            going = 1
+        )
+    else:
+        for i in range(len(going_db)):
+            goingList.append((going_db[i]['post_id'], (going_db[i]['person_id'])))
+
+        if (int(id), int(user_row.id)) not in goingList:
+            print("DESI YES")
+            db.going.insert(
+                user_id = user_row.id,
+                post_id = id,
+                going = 1
+            )
+
+        else:
+            print("DESI NO")
+            db((db.going.post_id == id) & (db.going.person_id == user_row.id)).update(
+            going = 1)
+
+        numGoing = len(db(db.going.post_id == id).select().as_list())
+        print("NUM GOING", numGoing)
+
     return dict(num_going=len(b))
     # row.update_record()
     
