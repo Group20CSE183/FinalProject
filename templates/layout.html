@@ -14,7 +14,7 @@
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="[[=URL('index')]]">
-          <h1>Activity Finder</h1>
+          <img src="titleAF.png" width="150"> 
           <!-- <img class="logo" width="150" src="images/site_icon.png"> -->
         </a>
 
@@ -34,18 +34,8 @@
         </div>
         <div class="navbar-end">
           <a class="navbar-item" href="[[=URL('index')]]">
-            Home
           </a>
-          <a class="navbar-item">
-            All Activities 
-          </a>
-          <a class="navbar-item">
-            Create a Post
-          </a>
-          <a class="navbar-item">
-            Settings
-          </a>
-
+        
           <div class="navbar-item">
             <div class="buttons">
               [[if globals().get('user'):]]
