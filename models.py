@@ -31,7 +31,6 @@ db.define_table('posts',
                 Field('location', requires=IS_NOT_EMPTY()),
                 Field('name'),
                 Field('going', type='integer',default='0'),
-                Field('is_going', type='boolean', default='false'),
                 Field('tag1'),
                 Field('tag2'),
                 Field('tag3'),
@@ -45,11 +44,5 @@ db.define_table('tags',
     Field('tag2'),
     Field('tag3'),
 )
-
-# db.define_table(
-#     'going',
-#     Field('post', 'reference posts'),
-#     Field('people_going', default=get_user)
-#     )
 
 db.commit()

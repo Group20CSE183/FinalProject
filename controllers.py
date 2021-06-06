@@ -43,9 +43,7 @@ def index():
         add_post_url = URL('add_post', signer=url_signer),
         add_tags_url = URL('add_tags', signer=url_signer),
         add_post_tag_url = URL('add_post_tag', signer=url_signer),
-        delete_tags_url = URL('delete_tags', signer=url_signer),
         delete_post_url = URL('delete_post', signer=url_signer),
-        delete_post_tag_url = URL('delete_post_tag', signer=url_signer),
         user_email = get_user_email(),
         username = auth.current_user.get('first_name') + " " + auth.current_user.get("last_name"),
         get_going_url = URL('get_going', signer=url_signer),
@@ -103,21 +101,12 @@ def add_tags():
     )
     return dict(id=id)
 
-# @action('delete_tags')
-# @action.uses(url_signer.verify(), db)
-# def delete_tags():
-#     print("called delete tags")
-#     post_id = request.params.get('post_id')
-#     assert post_id is not None
-#     db(db.tags.post_id == post_id).delete()
-
 # runs this if someone clicks going button
 @action('update_going')
 @action.uses(url_signer.verify(), db)
 def update_going():
     id = request.params.get('id')
     assert id is not None
-    a = "test"
     row=db(db.posts.id == id).select().first()
     b=row.going_list
     
@@ -129,12 +118,8 @@ def update_going():
         db(db.posts.id == id).update(
             going=row.going+1
         )
-    
-    # print("List: ",b)
-    # print("length: ",len(b))
 
     db(db.posts.id == id).update(
-            #  going_list.append("asdf")
              going_list = b
          )
     
@@ -145,10 +130,8 @@ def update_going():
 def update_not_going():
     id = request.params.get('id')
     assert id is not None
-    # a = "test"
     row=db(db.posts.id == id).select().first()
     b=row.going_list
-    # print("testtest")
 
     if get_user_email() in b:
         # going button was already pressed
@@ -159,12 +142,8 @@ def update_not_going():
             going=row.going-1
         )
         b.remove(get_user_email())
-    
-    print("List: ",b)
-    print("length: ",len(b))
 
     db(db.posts.id == id).update(
-            #  going_list.append("asdf")
              going_list = b
          )
     

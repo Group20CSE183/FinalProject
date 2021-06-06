@@ -212,8 +212,7 @@
                   <div class="container">
                     <span>
                       <div v-if="current_user_id==r.poster">
-                        <button @click="delete_post(r._idx)" class="button is-danger is-pulled-right"
-                          @mouseenter="show_going(true, r._idx)" @mouseleave="show_going(false)">
+                        <button @click="delete_post(r._idx)" class="button is-danger is-pulled-right">
                           <i class="fa fa-trash"></i>
                         </button>
                       </div>
@@ -255,7 +254,7 @@
   let username = "[[=XML(username)]]";
   let update_going_url = "[[=XML(update_going_url)]]";
   let update_not_going_url = "[[=XML(update_not_going_url)]]";
-  let get_going_url = "[[=XML(get_going_url)]]";
+  // let get_going_url = "[[=XML(get_going_url)]]";
   let upload_thumbnail_url = "[[=XML(upload_thumbnail_url)]]";
 </script>
 <script src="js/index.js"></script>
