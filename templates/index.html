@@ -188,7 +188,7 @@
                   <p><b>Going:</b> {{r.going}}</p>
 
                   <div v-if="r.going >= r.max_going">
-                    <p><b>Max Number of Participants for this Event Reached!</b></p>
+                    <p><b>Max Number of Participants for this Event Reached! (RSVP Disabled)</b></p>
                   </div>
 
                   <!-- code for image upload -->
@@ -231,36 +231,36 @@
                       <div v-if="r.max_going > r.going">   <!-- if max has not been reached -->
                         <div v-if="r.going_list.indexOf(current_user_email) > -1">
                           <div class="button is-light is-link">
-                            <span>Going</span>
+                            <span>RSVP</span>
                           </div>
                           <div class="button is-link">
-                            <span @click="is_not_going(r._idx)">Not Going</span>
+                            <span @click="is_not_going(r._idx)">Cancel RSVP</span>
                           </div>
                         </div>
                         <div v-else>
                           <div class="button is-link">
-                            <span @click="is_going(r._idx)">Going</span>
+                            <span @click="is_going(r._idx)">RSVP</span>
                           </div>
                           <div class="button is-light is-link">
-                            <span>Not Going</span>
+                            <span>Cancel RSVP</span>
                           </div>
                         </div>
                       </div>
                       <div v-else>   <!-- if max has been reached -->
                         <div v-if="r.going_list.indexOf(current_user_email) > -1">
                           <div class="button is-light is-link">
-                            <span>Going</span>
+                            <span>RSVP</span>
                           </div>
                           <div class="button is-link">
-                            <span @click="is_not_going(r._idx)">Not Going</span>
+                            <span @click="is_not_going(r._idx)">Remove RSVP</span>
                           </div>
                         </div>
                         <div v-else>
                           <div class="button is-light is-link">
-                            <span>Going</span>
+                            <span>RSVP</span>
                           </div>
                           <div class="button is-light is-link">
-                            <span>Not Going</span>
+                            <span>Remove RSVP</span>
                           </div>
                         </div>
                       </div>
