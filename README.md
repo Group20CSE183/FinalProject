@@ -1,5 +1,7 @@
 # FinalProject
 
+Paper Link: https://drive.google.com/file/d/1PikqQ_FWQqCvlwDGqWnOhOnaWOVrc-5q/view?usp=sharing
+
 First make sure to copy the repo link in terminal using 
 
 ```
