@@ -60,7 +60,7 @@ def load_posts():
     current_user_email = get_user_email()
     current_user_row = db(db.auth_user.email == current_user_email).select().first()
     return dict(rows=rows,
-    current_user_id=current_user_row.id,)
+    current_user_id=current_user_row.id, current_user_email=current_user_email)
 
 @action('add_post', method="POST")
 @action.uses(url_signer.verify(), db)
@@ -74,6 +74,7 @@ def add_post():
         date=request.json.get('date'),
         time=request.json.get('time'),
         location=request.json.get('location'),
+        max_going=request.json.get('max_going'),
         tag1=request.json.get('tag1'),
         tag2=request.json.get('tag2'),
         tag3=request.json.get('tag3'),
@@ -114,10 +115,11 @@ def update_going():
     # either in going_list already, do nothing
     # or add to going_list
     if get_user_email() not in b:
-        b.append(get_user_email())
-        db(db.posts.id == id).update(
-            going=row.going+1
-        )
+        if len(b) < row.max_going:
+            b.append(get_user_email())
+            db(db.posts.id == id).update(
+                going=row.going+1
+            )
 
     db(db.posts.id == id).update(
              going_list = b

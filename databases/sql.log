@@ -402,3 +402,33 @@ success!
 success!
 success!
 success!
+success!
+timestamp: 2021-06-06T22:53:28.317519
+ALTER TABLE "posts" ADD "max_going" INTEGER;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

@@ -16,11 +16,13 @@ let init = (app) => {
         add_date: "",
         add_time: "",
         add_location: "",
+        add_max_going: 1000,
         add_tag1: "",
         add_tag2: "",
         add_tag3: "",
         rows: [],
         user_email: user_email,
+        current_user_email: "",
         userName : username,
         add_going: 0,
         going_list: [],
@@ -41,6 +43,7 @@ let init = (app) => {
                 date: app.vue.add_date,
                 time: app.vue.add_time,
                 location: app.vue.add_location,
+                max_going: app.vue.add_max_going,
                 tag1: app.vue.add_tag1,
                 tag2: app.vue.add_tag2,
                 tag3: app.vue.add_tag3,
@@ -57,6 +60,7 @@ let init = (app) => {
                 date: app.vue.add_date,
                 time: app.vue.add_time,
                 location: app.vue.add_location,
+                max_going: app.vue.add_max_going,
                 tag1: app.vue.add_tag1,
                 tag2: app.vue.add_tag2,
                 tag3: app.vue.add_tag3,
@@ -71,7 +75,6 @@ let init = (app) => {
     };
 
     app.add_tags = function () {
-        console.log("add_tags called")
         axios.post(add_tags_url,
             {
                 tag1: app.vue.add_tag1,
@@ -119,6 +122,7 @@ let init = (app) => {
         app.vue.add_tag1 = "";
         app.vue.add_tag2 = "";
         app.vue.add_tag3 = "";
+        app.vue.add_max_going = 1000;
     };
 
     app.delete_post = function (row_idx) {
@@ -192,6 +196,7 @@ let init = (app) => {
             app.vue.current_user_id = response.data.current_user_id;
             app.enumerate(rows);
             app.vue.rows=rows;
+            app.vue.current_user_email = response.data.current_user_email;
         })
     };
 

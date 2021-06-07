@@ -36,6 +36,7 @@ db.define_table('posts',
                 Field('tag3'),
                 Field('going_list', type='list:string'),
                 Field('thumbnail','text'),
+                Field('max_going', type='integer',default='1000'),
             )
 
 db.commit()

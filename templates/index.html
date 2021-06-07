@@ -133,7 +133,7 @@
               <p><b>Time:</b></Time:></p> <input type="time" v-model="add_time" class="input">
               <p><b>Location:</b></p><input type="location" v-model="add_location" class="input">
               <p><b>Event Information:</b></p><input type="text" v-model="add_text" class="input">
-              <!-- <p><b>Number of Maximum Participants:</b></p><input type="num_going" v-model="add_num_going" class="input"> -->
+              <p><b>Number of Maximum Participants:</b></p><input type="max_going" v-model="add_max_going" class="input">
               <p><b>Tags:</b></p><input type="tag1" v-model="add_tag1" class="input">
               <p><input type="tag2" v-model="add_tag2" class="input"></p>
               <p><input type="tag3" v-model="add_tag3" class="input"></p>
@@ -187,6 +187,10 @@
                   <p><b>Tags:</b> {{r.tag1}} {{r.tag2}} {{r.tag3}}</p>
                   <p><b>Going:</b> {{r.going}}</p>
 
+                  <div v-if="r.going >= r.max_going">
+                    <p><b>Max Number of Participants for this Event Reached!</b></p>
+                  </div>
+
                   <!-- code for image upload -->
                   <div v-if="current_user_id==r.poster">
                     <div v-if="!r.thumbnail">
@@ -223,14 +227,44 @@
                   <!-- ^ code for delete ^ -->
 
                   <!-- code for going & not going -->
-                  <span v-if="current_user_id!=r.poster">
-                    <div class="button is-link">
-                      <span @click="is_going(r._idx)">Going</span>
-                    </div>
-                    <div class="button is-link">
-                      <span @click="is_not_going(r._idx)">Not Going</span>
-                    </div>
-                  </span>
+                    <span v-if="current_user_id!=r.poster">
+                      <div v-if="r.max_going > r.going">   <!-- if max has not been reached -->
+                        <div v-if="r.going_list.indexOf(current_user_email) > -1">
+                          <div class="button is-light is-link">
+                            <span>Going</span>
+                          </div>
+                          <div class="button is-link">
+                            <span @click="is_not_going(r._idx)">Not Going</span>
+                          </div>
+                        </div>
+                        <div v-else>
+                          <div class="button is-link">
+                            <span @click="is_going(r._idx)">Going</span>
+                          </div>
+                          <div class="button is-light is-link">
+                            <span>Not Going</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else>   <!-- if max has been reached -->
+                        <div v-if="r.going_list.indexOf(current_user_email) > -1">
+                          <div class="button is-light is-link">
+                            <span>Going</span>
+                          </div>
+                          <div class="button is-link">
+                            <span @click="is_not_going(r._idx)">Not Going</span>
+                          </div>
+                        </div>
+                        <div v-else>
+                          <div class="button is-light is-link">
+                            <span>Going</span>
+                          </div>
+                          <div class="button is-light is-link">
+                            <span>Not Going</span>
+                          </div>
+                        </div>
+                      </div>
+                    </span>
                   <!-- ^ code for going & not going ^ -->
                 </div>
               </div>
