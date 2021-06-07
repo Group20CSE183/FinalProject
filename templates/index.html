@@ -59,6 +59,10 @@
         <div class="container has-text-centered">
           <div class="column is-6 is-offset-3">
           </br>
+          <h1 class="title">
+            <b>Hello [[=globals().get('user').get('first_name')]]!</b>
+          </h1>
+          </br>
             <img src="title.png">
             </br> </br>
             <h1 class="subtitle">
@@ -201,6 +205,15 @@
                       <i> ({{r.max_going - r.going}} spots remaining)</i>
                     </span>
                   </p>
+
+                  <div v-if="current_user_id==r.poster">
+                    <p><b>Attendee Emails:</b></p>
+                    <div v-for="g in r.going_list">
+                      <p>{{g}}</p>
+                    </div>
+                    <br>
+                  </div>
+
 
                   <div v-if="r.going >= r.max_going">
                     <p><b>Max Number of Participants for this Event Reached!(RSVP Disabled)</b></p>
