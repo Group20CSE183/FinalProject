@@ -1,6 +1,6 @@
 # FinalProject
 
-Paper Link: https://drive.google.com/file/d/1PikqQ_FWQqCvlwDGqWnOhOnaWOVrc-5q/view?usp=sharing
+Paper Link: https://docs.google.com/document/d/1KHegfNWfYHV4GhK_98QN-O-yXL6Zi6JI9zmlsjMeO8A/edit
 
 First make sure to copy the repo link in terminal using 
 
