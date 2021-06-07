@@ -133,6 +133,7 @@
               <p><b>Time:</b></Time:></p> <input type="time" v-model="add_time" class="input">
               <p><b>Location:</b></p><input type="location" v-model="add_location" class="input">
               <p><b>Event Information:</b></p><input type="text" v-model="add_text" class="input">
+              <!-- <p><b>Number of Maximum Participants:</b></p><input type="num_going" v-model="add_num_going" class="input"> -->
               <p><b>Tags:</b></p><input type="tag1" v-model="add_tag1" class="input">
               <p><input type="tag2" v-model="add_tag2" class="input"></p>
               <p><input type="tag3" v-model="add_tag3" class="input"></p>
@@ -254,7 +255,6 @@
   let username = "[[=XML(username)]]";
   let update_going_url = "[[=XML(update_going_url)]]";
   let update_not_going_url = "[[=XML(update_not_going_url)]]";
-  // let get_going_url = "[[=XML(get_going_url)]]";
   let upload_thumbnail_url = "[[=XML(upload_thumbnail_url)]]";
 </script>
 <script src="js/index.js"></script>

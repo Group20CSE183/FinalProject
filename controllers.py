@@ -137,7 +137,6 @@ def update_not_going():
         # going button was already pressed
         # remove user email from going_list
         # not going
-        # print("test")
         db(db.posts.id == id).update(
             going=row.going-1
         )
@@ -155,5 +154,3 @@ def upload_thumbnail():
     id = request.json.get("id")
     thumbnail = request.json.get("thumbnail")
     db(db.posts.id == id).update(thumbnail=thumbnail)
-    print
-    return "ok"

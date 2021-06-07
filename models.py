@@ -38,11 +38,4 @@ db.define_table('posts',
                 Field('thumbnail','text'),
             )
 
-db.define_table('tags',
-    Field('post_id', 'reference posts'),
-    Field('tag1'),
-    Field('tag2'),
-    Field('tag3'),
-)
-
 db.commit()
