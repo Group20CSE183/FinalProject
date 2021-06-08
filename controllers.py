@@ -50,7 +50,24 @@ def index():
         update_going_url = URL('update_going', signer=url_signer),
         update_not_going_url = URL('update_not_going', signer=url_signer),
         upload_thumbnail_url = URL('upload_thumbnail', signer=url_signer),
+        search_url = URL('search', signer=url_signer),
     )
+
+# @action('search')
+# @action.uses()
+# def search():
+#     q = request.params.get("q")   # query string
+#     print("printing q: ", q)
+#     print(type(q))
+#     results = []
+#     text_data = db(db.posts).select().as_list()
+#     for i in range(len(text_data)):
+#         if (q in text_data[i]["text"]):
+#             print("search word found")
+#             results.append(i)
+#     # results = [q + ":" + str(uuid.uuid1()) for _ in range(random.randint(2, 6))]
+#     results = []
+#     return dict(results=results)
 
 @action('load_posts')
 @action.uses(url_signer.verify(), db)

@@ -48,6 +48,10 @@
     color: #C2C2C2;
   }
 
+  .rsvp_buttons{
+    float: right
+  }
+
 </style>
 <!-------------------- ^ CSS For Style ^------------------------>
 
@@ -69,20 +73,25 @@
               <b>Connect with fellow students to find activities, go on adventures, and meet new people!</b>
             </h1>
             </br>
-            <a class="button is-black" href="[[=URL('auth/login')]]">Log in</a>
-            <a class="button is-black" href="[[=URL('auth/register')]]">Sign up</a>
-            <!-- <div class="box">
-              <div class="field is-grouped">
-                <p class="control is-expanded">
+            <!-- <div class="box"> -->
+              <!-- <div class="field is-grouped"> -->
+                <!-- <p class="control is-expanded">
                   <input class="input" type="text" placeholder="Search For An Activity">
                 </p>
-                <p class="control">
-                  <a class="button is-dark">
+                <p class="control"> -->
+                  <!-- <a class="button is-dark">
                     Search
-                  </a>
-                </p>
-              </div>
-            </div> -->
+                  </a> -->
+                <!-- </p> -->
+                <!-- search bar code -->
+                <!-- <div class="section" id="search-div" v-cloak>
+                  <div class="control block">
+                    <input class="input" type="text" v-model="query" @keyup="search">
+                  </div>
+                </div> -->
+                <!-- search bar code ends -->
+              <!-- </div> -->
+            <!-- </div> -->
           </div>
         </div>
       </div>
@@ -170,135 +179,287 @@
     <!---------------------Posts Layout--------------------->
     <div class="container block">
       <div class="block">
-        <button @click="set_add_status(true)" class="button is-dark align: right">
-          <i class="fa fa-plus fa-fw"></i> Post An Activity
-        </button>
+        <div v-if="rsvp_mode">
+          <button @click="set_add_status(true)" class="button is-success align: right">
+            <i class="fa fa-plus fa-fw"></i> Post An Activity
+          </button>
+          <div class="rsvp_buttons">
+            <button @click="show_rsvp(false)" id="all-posts" class="button is-success is-light align: right">
+              <p><u>Show All Posts</u></p>
+            </button>
+          </div>
+        </div>
+        <div v-else>
+          <button @click="set_add_status(true)" class="button is-success align: right">
+            <i class="fa fa-plus fa-fw"></i> Post An Activity
+          </button>
+          <div class="rsvp_buttons">
+            <button @click="show_rsvp(true)" id="rsvp-posts" class="button is-success is-light align: right">
+              <p><u>Show Events I'm RSVP'd To</u></p>
+            </button>
+          </div>
+        </div>
       </div>
       <div class="columns is-multiline is-flex">
         <div v-for="r in rows">
-          <div class="postsGrid">
-            <div class="box">
-              <div v-if="r.thumbnail">
-                <div class="card-image">
-                  <figure class="image is-4by3">
-                    <img v-if="r.thumbnail" :src="r.thumbnail" width="960px">
-                  </figure>
-                </div>
-              </div>
-              <div v-else>
-                <div class="card-image">
-                  <figure class="image is-4by3">
-                    <img src="none.png" alt="Placeholder image">
-                  </figure>
-                </div>
-              </div>
-              <div class="card-content">
-                <div class="content">
-                  <h4><b>Location:</b> {{r.location}}</h4>
-                  <p><b>Date:</b> {{r.date}}</p>
-                  <p><b>Time:</b> {{r.time}}</p>
-                  <p><b>Event Information:</b> {{r.text}}</p>
-                  <p><b>Hosted By:</b> {{r.name}}</p>
-                  <p><b>Tags:</b> {{r.tag1}} {{r.tag2}} {{r.tag3}}</p>
-                  <p><b>Going:</b> {{r.going}} 
-                    <span v-if="r.going < r.max_going">
-                      <i> ({{r.max_going - r.going}} spots remaining)</i>
-                    </span>
-                  </p>
-
-                  <div v-if="current_user_id==r.poster">
-                    <p><b>Attendee Emails:</b></p>
-                    <div v-for="g in r.going_list">
-                      <p>{{g}}</p>
+          <!-- rsvp mode -->
+          <div v-if="rsvp_mode">
+            <div v-if="r.going_list.indexOf(current_user_email) > -1">
+              <div class="postsGrid">
+                <div class="box">
+                  <div v-if="r.thumbnail">
+                    <div class="card-image">
+                      <figure class="image is-4by3">
+                        <img v-if="r.thumbnail" :src="r.thumbnail" width="960px">
+                      </figure>
                     </div>
-                    <br>
                   </div>
-
-
-                  <div v-if="r.going >= r.max_going">
-                    <p><b>Max Number of Participants for this Event Reached!(RSVP Disabled)</b></p>
+                  <div v-else>
+                    <div class="card-image">
+                      <figure class="image is-4by3">
+                        <img src="none.png" alt="Placeholder image">
+                      </figure>
+                    </div>
                   </div>
-
-                  <!-- code for image upload -->
-                  <div v-if="current_user_id==r.poster">
-                    <div v-if="!r.thumbnail">
-                      <p class="control">
-                        </br></br></br>
-                      <div class="file is-info is-pulled-left">
-                        <label class="file-label">
-                          <input class="file-input" type="file"
-                            accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
-                            @change="upload_file($event, r._idx)">
-                          <span class="file-cta">
-                            <span class="file-label">
-                              <span><i class="fa fa-upload"></i></span>
-                            </span>
-                          </span>
-                        </label>
-                      </div>
+                  <div class="card-content">
+                    <div class="content">
+                      <h4><b>Location:</b> {{r.location}}</h4>
+                      <p><b>Date:</b> {{r.date}}</p>
+                      <p><b>Time:</b> {{r.time}}</p>
+                      <p><b>Event Information:</b> {{r.text}}</p>
+                      <p><b>Hosted By:</b> {{r.name}}</p>
+                      <p><b>Tags:</b> {{r.tag1}} {{r.tag2}} {{r.tag3}}</p>
+                      <p><b>Going:</b> {{r.going}} 
+                        <span v-if="r.going < r.max_going">
+                          <i> ({{r.max_going - r.going}} spots remaining)</i>
+                        </span>
                       </p>
+    
+                      <div v-if="current_user_id==r.poster">
+                        <p><b>Attendee Emails:</b></p>
+                        <div v-for="g in r.going_list">
+                          <p>{{g}}</p>
+                        </div>
+                        <br>
+                      </div>
+    
+    
+                      <div v-if="r.going >= r.max_going">
+                        <p><b>Max Number of Participants for this Event Reached!(RSVP Disabled)</b></p>
+                      </div>
+    
+                      <!-- code for image upload -->
+                      <div v-if="current_user_id==r.poster">
+                        <div v-if="!r.thumbnail">
+                          <p class="control">
+                            </br></br></br>
+                          <div class="file is-info is-pulled-left">
+                            <label class="file-label">
+                              <input class="file-input" type="file"
+                                accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                                @change="upload_file($event, r._idx)">
+                              <span class="file-cta">
+                                <span class="file-label">
+                                  <span><i class="fa fa-upload"></i></span>
+                                </span>
+                              </span>
+                            </label>
+                          </div>
+                          </p>
+                        </div>
+                      </div>
+                      <!-- ^ code for image upload ^-->
+    
+    
+                      <!-- code for delete -->
+                      <div class="container">
+                        <span>
+                          <div v-if="current_user_id==r.poster">
+                            <button @click="delete_post(r._idx)" class="button is-danger is-pulled-right">
+                              <i class="fa fa-trash"></i>
+                            </button>
+                          </div>
+                        </span>
+                      </div>
+                      </br></br>
+                      <!-- ^ code for delete ^ -->
+    
+                      <!-- code for going & not going -->
+                        <span v-if="current_user_id!=r.poster">
+                          <div v-if="r.max_going > r.going">   <!-- if max has not been reached -->
+                            <div v-if="r.going_list.indexOf(current_user_email) > -1">
+                              <div class="button button is-outlined">
+                                <span>RSVP</span>
+                              </div>
+                              <div class="button is-link">
+                                <span @click="is_not_going(r._idx)">Cancel RSVP</span>
+                              </div>
+                            </div>
+                            <div v-else>
+                              <div class="button is-link">
+                                <span @click="is_going(r._idx)">RSVP</span>
+                              </div>
+                              <div class="button button is-outlined">
+                                <span>Cancel RSVP</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div v-else>   <!-- if max has been reached -->
+                            <div v-if="r.going_list.indexOf(current_user_email) > -1">
+                              <div class="button is-outlined">
+                                <span>RSVP</span>
+                              </div>
+                              <div class="button is-link">
+                                <span @click="is_not_going(r._idx)">Remove RSVP</span>
+                              </div>
+                            </div>
+                            <div v-else>
+                              <div class="button is-outlined">
+                                <span>RSVP</span>
+                              </div>
+                              <div class="button is-outlined">
+                                <span>Remove RSVP</span>
+                              </div>
+                            </div>
+                          </div>
+                        </span>
+                      <!-- ^ code for going & not going ^ -->
                     </div>
                   </div>
-                  <!-- ^ code for image upload ^-->
-
-
-                  <!-- code for delete -->
-                  <div class="container">
-                    <span>
-                      <div v-if="current_user_id==r.poster">
-                        <button @click="delete_post(r._idx)" class="button is-danger is-pulled-right">
-                          <i class="fa fa-trash"></i>
-                        </button>
-                      </div>
-                    </span>
-                  </div>
-                  </br></br>
-                  <!-- ^ code for delete ^ -->
-
-                  <!-- code for going & not going -->
-                    <span v-if="current_user_id!=r.poster">
-                      <div v-if="r.max_going > r.going">   <!-- if max has not been reached -->
-                        <div v-if="r.going_list.indexOf(current_user_email) > -1">
-                          <div class="button button is-outlined">
-                            <span>RSVP</span>
-                          </div>
-                          <div class="button is-link">
-                            <span @click="is_not_going(r._idx)">Cancel RSVP</span>
-                          </div>
-                        </div>
-                        <div v-else>
-                          <div class="button is-link">
-                            <span @click="is_going(r._idx)">RSVP</span>
-                          </div>
-                          <div class="button button is-outlined">
-                            <span>Cancel RSVP</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div v-else>   <!-- if max has been reached -->
-                        <div v-if="r.going_list.indexOf(current_user_email) > -1">
-                          <div class="button is-outlined">
-                            <span>RSVP</span>
-                          </div>
-                          <div class="button is-link">
-                            <span @click="is_not_going(r._idx)">Remove RSVP</span>
-                          </div>
-                        </div>
-                        <div v-else>
-                          <div class="button is-outlined">
-                            <span>RSVP</span>
-                          </div>
-                          <div class="button is-outlined">
-                            <span>Remove RSVP</span>
-                          </div>
-                        </div>
-                      </div>
-                    </span>
-                  <!-- ^ code for going & not going ^ -->
                 </div>
               </div>
             </div>
           </div>
+          <!-- rsvp mode ends -->
+
+          <!-- all posts -->
+          <div v-else>
+            <div class="postsGrid">
+              <div class="box">
+                <div v-if="r.thumbnail">
+                  <div class="card-image">
+                    <figure class="image is-4by3">
+                      <img v-if="r.thumbnail" :src="r.thumbnail" width="960px">
+                    </figure>
+                  </div>
+                </div>
+                <div v-else>
+                  <div class="card-image">
+                    <figure class="image is-4by3">
+                      <img src="none.png" alt="Placeholder image">
+                    </figure>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <div class="content">
+                    <h4><b>Location:</b> {{r.location}}</h4>
+                    <p><b>Date:</b> {{r.date}}</p>
+                    <p><b>Time:</b> {{r.time}}</p>
+                    <p><b>Event Information:</b> {{r.text}}</p>
+                    <p><b>Hosted By:</b> {{r.name}}</p>
+                    <p><b>Tags:</b> {{r.tag1}} {{r.tag2}} {{r.tag3}}</p>
+                    <p><b>Going:</b> {{r.going}} 
+                      <span v-if="r.going < r.max_going">
+                        <i> ({{r.max_going - r.going}} spots remaining)</i>
+                      </span>
+                    </p>
+  
+                    <div v-if="current_user_id==r.poster">
+                      <p><b>Attendee Emails:</b></p>
+                      <div v-for="g in r.going_list">
+                        <p>{{g}}</p>
+                      </div>
+                      <br>
+                    </div>
+  
+  
+                    <div v-if="r.going >= r.max_going">
+                      <p><b>Max Number of Participants for this Event Reached!(RSVP Disabled)</b></p>
+                    </div>
+  
+                    <!-- code for image upload -->
+                    <div v-if="current_user_id==r.poster">
+                      <div v-if="!r.thumbnail">
+                        <p class="control">
+                          </br></br></br>
+                        <div class="file is-info is-pulled-left">
+                          <label class="file-label">
+                            <input class="file-input" type="file"
+                              accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                              @change="upload_file($event, r._idx)">
+                            <span class="file-cta">
+                              <span class="file-label">
+                                <span><i class="fa fa-upload"></i></span>
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                        </p>
+                      </div>
+                    </div>
+                    <!-- ^ code for image upload ^-->
+  
+  
+                    <!-- code for delete -->
+                    <div class="container">
+                      <span>
+                        <div v-if="current_user_id==r.poster">
+                          <button @click="delete_post(r._idx)" class="button is-danger is-pulled-right">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </div>
+                      </span>
+                    </div>
+                    </br></br>
+                    <!-- ^ code for delete ^ -->
+  
+                    <!-- code for going & not going -->
+                      <span v-if="current_user_id!=r.poster">
+                        <div v-if="r.max_going > r.going">   <!-- if max has not been reached -->
+                          <div v-if="r.going_list.indexOf(current_user_email) > -1">
+                            <div class="button button is-outlined">
+                              <span>RSVP</span>
+                            </div>
+                            <div class="button is-link">
+                              <span @click="is_not_going(r._idx)">Cancel RSVP</span>
+                            </div>
+                          </div>
+                          <div v-else>
+                            <div class="button is-link">
+                              <span @click="is_going(r._idx)">RSVP</span>
+                            </div>
+                            <div class="button button is-outlined">
+                              <span>Cancel RSVP</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div v-else>   <!-- if max has been reached -->
+                          <div v-if="r.going_list.indexOf(current_user_email) > -1">
+                            <div class="button is-outlined">
+                              <span>RSVP</span>
+                            </div>
+                            <div class="button is-link">
+                              <span @click="is_not_going(r._idx)">Remove RSVP</span>
+                            </div>
+                          </div>
+                          <div v-else>
+                            <div class="button is-outlined">
+                              <span>RSVP</span>
+                            </div>
+                            <div class="button is-outlined">
+                              <span>Remove RSVP</span>
+                            </div>
+                          </div>
+                        </div>
+                      </span>
+                    <!-- ^ code for going & not going ^ -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- all posts ends -->
+
           </br>
         </div>
       </div>
@@ -319,6 +480,7 @@
   let update_going_url = "[[=XML(update_going_url)]]";
   let update_not_going_url = "[[=XML(update_not_going_url)]]";
   let upload_thumbnail_url = "[[=XML(upload_thumbnail_url)]]";
+  // let search_url = "[[=XML(search_url)]]";
 </script>
 <script src="js/index.js"></script>
 [[end]]

@@ -11,6 +11,7 @@ let init = (app) => {
     app.data = {
         // Complete as you see fit.
         add_mode: false,
+        rsvp_mode: false,
         current_user_id: -1,
         add_text: "",
         add_date: "",
@@ -26,6 +27,7 @@ let init = (app) => {
         userName : username,
         add_going: 0,
         going_list: [],
+        // query: "",
     };
 
     app.enumerate = (a) => {
@@ -36,7 +38,6 @@ let init = (app) => {
     };
 
     app.add_post = function () {
-        console.log("add_post called")
         axios.post(add_post_url,
             {
                 text: app.vue.add_text,
@@ -138,6 +139,10 @@ let init = (app) => {
             });
     };
 
+    app.show_rsvp = function (new_status) {
+        app.vue.rsvp_mode = new_status;
+    };
+
     app.set_add_status = function (new_status) {
         app.vue.add_mode = new_status;
     };
@@ -166,6 +171,24 @@ let init = (app) => {
         }
     };
 
+    // app.searchvue = new Vue({
+    //     el: '#search-div',
+    //     data: {query: ""},
+    //     methods: {
+    //         search : function () {
+    //             if (app.searchvue.query.length > 1) {
+    //                 axios.get(search_url, {params: {q: app.vue.query}})
+    //                     .then(function (result) {
+    //                         app.vue.results = result.data.results;
+    //                     });
+    //             } else {
+    //                 app.vue.results = [];
+    //             }
+    //         }
+    //     }
+    // });
+
+
     // This contains all the methods.
     app.methods = {
         // Complete as you see fit.
@@ -173,11 +196,11 @@ let init = (app) => {
         add_tags: app.add_tags,
         add_post_tag: app.add_post_tag,
         set_add_status: app.set_add_status,
+        show_rsvp: app.show_rsvp,
         delete_post: app.delete_post,
         is_going: app.is_going,
         upload_file: app.upload_file,
         is_not_going: app.is_not_going,
-        
     };
 
     // This creates the Vue instance.
